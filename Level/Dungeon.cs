@@ -11,8 +11,8 @@ namespace DungeonTest
         public const int HEIGHT = 100;
 
         const double TAU = Math.PI * 2;
-        const int MIN_ROOM_SIZE = 5;
-        const int MAX_ROOM_SIZE = 10;
+        const int MIN_ROOM_SIZE = 8;
+        const int MAX_ROOM_SIZE = 15;
         const int MIN_ROOMS = 25;
         const int MAX_ROOMS = 50;
 
@@ -121,7 +121,7 @@ namespace DungeonTest
                         //reached 1, 1
                         if ((room.X == 1) && (room.Y == 1))
                             break;
-                        
+
                         if (DoesCollide(room, j))
                         {// hit another room
                             // this is as far as we go
@@ -139,7 +139,7 @@ namespace DungeonTest
         {
             //making pathways
             status = "CREATING PATHS";
-            
+
             for (int i = 0; i < roomsToMake; i++)
             {
                 Rectangle room = rooms[i];
@@ -164,7 +164,7 @@ namespace DungeonTest
                     }
                 }
             }
-            
+
             //set null blocks to solid cobble
             status = "PLACING BLOCKS";
 
@@ -245,7 +245,7 @@ namespace DungeonTest
             }
             return closest;
         }
-        
+
         static void UpdateData()
         {
             // 9 = protocol + spawn position
@@ -273,7 +273,7 @@ namespace DungeonTest
             spawn.Y = BitConverter.ToSingle(mapData, 4);
 
             Clear();
-            
+
             for (int x = 0; x < WIDTH; x++)
                 for (int y = 0; y < HEIGHT; y++)
                 {
