@@ -1,0 +1,48 @@
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\Content\Fonts\default.xnb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Blocks\cobble.xnb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Blocks\wood.xnb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Entities\player.xnb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Floors\wood.xnb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\Content\Sprites\roof.xnb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\DungeonCrawler.exe
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\DungeonCrawler.pdb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\MonoGame.Framework.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.XAudio2.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.Direct3D11.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.DXGI.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.Direct2D1.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.XInput.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.RawInput.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.Direct3D9.dll
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\MonoGame.Framework.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.XAudio2.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.Direct3D11.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.DXGI.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.Direct2D1.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.XInput.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.RawInput.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\SharpDX.Direct3D9.xml
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\obj\x86\Debug\DungeonCrawler.csprojResolveAssemblyReference.cache
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\obj\x86\Debug\DungeonCrawler.exe
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\obj\x86\Debug\DungeonCrawler.pdb
+C:\Users\Arthur\OneDrive\C# XNA\DungeonCrawler\DungeonCrawler\bin\Windows\Debug\Content\SaveData\ServerList.txt
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\obj\x86\Debug\DungeonCrawler.exe
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\obj\x86\Debug\DungeonCrawler.pdb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Content\Fonts\default.xnb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Blocks\cobble.xnb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Blocks\wood.xnb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Entities\player.xnb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Content\Sprites\Floors\wood.xnb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Content\Sprites\roof.xnb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Content\SaveData\ServerList.txt
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\SDL.dll
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\SDL_mixer.dll
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\DungeonCrawler.exe
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\DungeonCrawler.pdb
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\MonoGame.Framework.dll
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\OpenTK.dll
+C:\Users\acerio\Desktop\Dungeontestt\DungeonCrawler\bin\Windows\Debug\Tao.Sdl.dll
