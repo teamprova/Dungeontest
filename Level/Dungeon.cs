@@ -34,11 +34,16 @@ namespace DungeonTest
         {
             complete = false;
             status = "";
-            rooms.Clear();
 
             generationThread = new Thread(new ThreadStart(GeneratorThread));
             generationThread.IsBackground = true;
             generationThread.Start();
+        }
+
+        public static void Clear()
+        {
+            rooms.Clear();
+            map = new Block[WIDTH, HEIGHT];
         }
 
         public static float GetProgress()
@@ -59,7 +64,7 @@ namespace DungeonTest
         {
             // Variables for the room
             roomsToMake = rnd.Next(MIN_ROOMS, MAX_ROOMS); // Random room count
-            map = new Block[WIDTH, HEIGHT];
+            Clear();
 
             MakeRooms();
             SquashRooms();
@@ -267,7 +272,7 @@ namespace DungeonTest
             spawn.X = BitConverter.ToSingle(mapData, 0);
             spawn.Y = BitConverter.ToSingle(mapData, 4);
 
-            map = new Block[WIDTH, HEIGHT];
+            Clear();
             
             for (int x = 0; x < WIDTH; x++)
                 for (int y = 0; y < HEIGHT; y++)

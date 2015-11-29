@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/acerio/Desktop/Dungeontestt/DungeonCrawler/Content/Fonts/default.png</SourceFile>
-  <SourceTime>2015-11-29T17:19:37.7772079-05:00</SourceTime>
-  <DestFile>C:/Users/acerio/Desktop/Dungeontestt/DungeonCrawler/Content/bin/Windows/Fonts/default.xnb</DestFile>
-  <DestTime>2015-11-29T17:50:33.952236-05:00</DestTime>
+  <SourceFile>C:/Users/Arthur/OneDrive/C# XNA/DungeonCrawler/DungeonCrawler/Content/Fonts/default.png</SourceFile>
+  <SourceTime>2015-11-29T03:46:53.932239-05:00</SourceTime>
+  <DestFile>C:/Users/Arthur/OneDrive/C# XNA/DungeonCrawler/DungeonCrawler/Content/bin/Windows/Fonts/default.xnb</DestFile>
+  <DestTime>2015-11-29T14:17:47.0247188-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T13:14:44-04:00</ImporterTime>
   <Processor>FontTextureProcessor</Processor>

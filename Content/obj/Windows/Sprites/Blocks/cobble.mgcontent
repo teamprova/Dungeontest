@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/acerio/Desktop/Dungeontestt/DungeonCrawler/Content/Sprites/Blocks/cobble.png</SourceFile>
-  <SourceTime>2015-11-29T17:19:37.7792078-05:00</SourceTime>
-  <DestFile>C:/Users/acerio/Desktop/Dungeontestt/DungeonCrawler/Content/bin/Windows/Sprites/Blocks/cobble.xnb</DestFile>
-  <DestTime>2015-11-29T17:22:28.0349335-05:00</DestTime>
+  <SourceFile>C:/Users/Arthur/OneDrive/C# XNA/DungeonCrawler/DungeonCrawler/Content/Sprites/Blocks/cobble.png</SourceFile>
+  <SourceTime>2015-11-29T03:46:53.9672619-05:00</SourceTime>
+  <DestFile>C:/Users/Arthur/OneDrive/C# XNA/DungeonCrawler/DungeonCrawler/Content/bin/Windows/Sprites/Blocks/cobble.xnb</DestFile>
+  <DestTime>2015-11-29T03:51:14.6751278-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T13:14:44-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

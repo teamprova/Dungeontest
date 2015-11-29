@@ -46,7 +46,7 @@ namespace DungeonTest
                 Dungeon.status = "CONNECTION FAILED";
                 timeSpentReading += deltaTime;
 
-                if (loading && timeSpentReading > READ_TIME || !loading)
+                if ((loading && timeSpentReading > READ_TIME) || !loading)
                     return new Join();
             }
 
@@ -101,9 +101,6 @@ namespace DungeonTest
 
         void UpdateEntities(byte[] response)
         {
-            if (Dungeon.entities.Count > 0)
-                return;
-
             List<Player> PlayerResponseList = new List<Player>();
             List<Entity> EntityResponseList = new List<Entity>();
 

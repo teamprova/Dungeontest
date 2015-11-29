@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -24,7 +23,7 @@ namespace DungeonTest
 
         // Test Stuff
         const int MAKE_ME_FEEL_TALLER = 0;
-
+        
         const float MIN_BRIGHTNESS = .2f;
 
         public static TextureData roofTextureData;
@@ -32,7 +31,7 @@ namespace DungeonTest
         static Vector2 STATUS_TEXT_POS = new Vector2(20, 20);
 
         Container loadingBar = new Container(20, 340, 0, 40);
-
+        
         Texture2D canvas;
         TextureData ctx = new TextureData(GAME_WIDTH, GAME_HEIGHT);
 
@@ -40,35 +39,19 @@ namespace DungeonTest
 
         protected Player player = new Player();
         protected List<Player> players = new List<Player>();
-
+        
         protected bool initializing = true;
         protected bool loading = true;
         protected int id = 0;
         protected bool closed = false;
 
-        bool debugTools = false;
+        bool debugging = false;
         float averagefps = 0;
         List<float> fps = new List<float>();
-        int _total_frames = 0;
-        float _elapsed_time = 0.0f;
-        int _fps = 0;
 
         public override Screen Update(float deltaTime)
         {
-            GameTime gameTime = new GameTime();
-
-            // Update
-            _elapsed_time += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            // 1 second has passed
-            if (_elapsed_time >= 1000.0f)
-            {
-                _fps = _total_frames;
-                _total_frames = 0;
-                _elapsed_time = 0;
-            }
-
-            //base.Update(gameTime);
+            GetFPS(deltaTime);
 
             if (Input.Tapped(Keys.Escape))
             {
@@ -76,7 +59,7 @@ namespace DungeonTest
                 return new Start();
             }
             if (Input.Tapped(Keys.F3))
-                debugTools = !debugTools;
+                debugging = !debugging;
 
             return this;
         }
@@ -100,6 +83,8 @@ namespace DungeonTest
             ctx.Clear();
             RayCast();
             DrawEntities();
+
+            if(debugging)
             DrawMiniMap();
 
             canvas.SetData(ctx.data);
@@ -108,24 +93,38 @@ namespace DungeonTest
             // Draw the screen
             spriteBatch.Draw(canvas, Vector2.Zero, null, Color.White, 0, Vector2.Zero, GAME_SCALE, SpriteEffects.None, 0);
 
-            if(debugTools)
+            if(debugging)
                 DrawFPS(spriteBatch);
 
             spriteBatch.End();
         }
 
+        protected void GetFPS(float deltaTime)
+        {
+            if(deltaTime != 0)
+                fps.Add(1 / deltaTime);
+
+            averagefps = 0;
+
+            foreach (float frames in fps)
+            {
+                averagefps += frames;
+            }
+
+            averagefps = (int)(averagefps / fps.Count);
+        }
 
         void DrawFPS(SpriteBatch spriteBatch)
         {
-            // Only update total frames when drawing
-            _total_frames++;
+            string fpsString = averagefps.ToString();
 
-            int fpsString = _fps;
+            fpsString = Tool.FormatString(fpsString);
 
-            //spriteBatch.Begin();
-            spriteBatch.DrawString(Tool.Font, string.Format("FPS: {0}", fpsString),
-                new Vector2(10.0f, 20.0f), Color.White);
-            //spriteBatch.End();
+            Vector2 stringSize = Tool.Font.MeasureString(fpsString);
+
+            Vector2 offset = new Vector2(resolution.X - stringSize.X, 0);
+
+            spriteBatch.DrawString(Tool.Font, fpsString, offset, Color.White);
         }
 
 
@@ -295,7 +294,7 @@ namespace DungeonTest
                         texturePos.Y = Math.Abs(texturePos.Y);
 
                         float brightness = GetBrightness(texturePos.X, texturePos.Y);
-
+                        
                         Block block = Dungeon.GetBlockAt(texturePos.X, texturePos.Y);
 
                         if (block != null)
@@ -351,7 +350,7 @@ namespace DungeonTest
 
                 Vector2 vectDist = coords - e.pos;
                 float distance = vectDist.Length();
-
+                
                 float lightFromEntity = e.luminosity;
 
                 if (distance != 0)

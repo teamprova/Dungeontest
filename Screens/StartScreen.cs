@@ -13,8 +13,9 @@ namespace DungeonTest
     class Start : Screen
     {
         Button NewGame = new Button("Start Game", 300, 125);
-        Button ServerList = new Button("Join Server", 300, 170);
-        Button Exit = new Button("Leave Game", 300, 215);
+        Button HostGame = new Button("Host Game", 300, 170);
+        Button ServerList = new Button("Join Server", 300, 215);
+        Button Exit = new Button("Leave Game", 300, 260);
         List<Tool> Tools = new List<Tool>();
         MouseState mouse = Mouse.GetState();
 
@@ -23,6 +24,7 @@ namespace DungeonTest
             Input.lockMouse = false;
 
             Tools.Add(NewGame);
+            Tools.Add(HostGame);
             Tools.Add(ServerList);
             Tools.Add(Exit);
         }
@@ -34,10 +36,12 @@ namespace DungeonTest
             foreach (Tool tool in Tools)
                 tool.Update(0);
 
+            if (NewGame.Clicked)
+                return new SinglePlayer();
+            if (HostGame.Clicked)
+                return new ServerHost();
             if (ServerList.Clicked)
                 return new Join();
-            if (NewGame.Clicked)
-                return new ServerHost();
             if (Exit.Clicked)
                 RequestExit = true;
             return this;

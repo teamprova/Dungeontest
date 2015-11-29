@@ -57,6 +57,7 @@
     <Compile Include="Screens\ServerClient.cs" />
     <Compile Include="Screens\ServerHost.cs" />
     <Compile Include="Screens\ServerList.cs" />
+    <Compile Include="Screens\SinglePlayer.cs" />
     <Compile Include="Screens\StartScreen.cs" />
     <Compile Include="TextureData.cs" />
   </ItemGroup>
