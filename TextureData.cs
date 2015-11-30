@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
 
 namespace DungeonTest
 {
@@ -20,16 +18,28 @@ namespace DungeonTest
             Clear();
         }
 
-        public TextureData(Texture2D texture)
+        public TextureData(string src)
         {
-            LoadTexture(texture);
-        }
+            System.Drawing.Bitmap texture = new System.Drawing.Bitmap(src);
 
-        public TextureData(ContentManager Content, string src)
-        {
-            Texture2D texture = Content.Load<Texture2D>(src);
+            width = texture.Width;
+            height = texture.Height;
 
-            LoadTexture(texture);
+            Clear();
+
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
+                {
+                    Color xnaColor = new Color();
+                    System.Drawing.Color formsColor = texture.GetPixel(x, y);
+
+                    xnaColor.R = formsColor.R;
+                    xnaColor.G = formsColor.G;
+                    xnaColor.B = formsColor.B;
+                    xnaColor.A = formsColor.A;
+
+                    data[y * width + x] = xnaColor.PackedValue;
+                }
         }
 
         void LoadTexture(Texture2D texture)
