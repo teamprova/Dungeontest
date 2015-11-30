@@ -11,5 +11,8 @@ The tech behind Dungeontest
 ###### Framework
 We are using MonoGame in C#, which is a cooler version of XNA.
 
+###### Modding API
+This is not complete currently, but we do have a Lua interpreter. We use Moon#, to interprete Lua, and convert to C#. In the future, it will be used for mods, but currently all it does is interpret Lua to C#.
+
 ###### Rendering Engine
 We are currently using a Raycasting engine to create a 3D space, even though all of the logic is in 2D.
