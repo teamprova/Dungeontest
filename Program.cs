@@ -19,6 +19,8 @@ namespace DungeonTest
         [STAThread]
         static void Main()
         {
+            ServerHost.IPv4 = getIPv4();
+
             using (game = new DungeonTest())
             game.Run();
         }

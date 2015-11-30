@@ -5,16 +5,15 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Threading;
 
 namespace DungeonTest
 {
     public class DungeonTest : Game
     {
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Screen currentScreen;
-        Stopwatch elapsedTimeWatch = new Stopwatch();
 
         public DungeonTest()
         {
@@ -22,6 +21,9 @@ namespace DungeonTest
             Content.RootDirectory = "Content";
 
             Window.AllowUserResizing = true;
+
+            // Fixes the weird update issues and allows the game run at higher frame rates
+            IsFixedTimeStep = false;
         }
 
         // Load a testing mod
@@ -29,17 +31,21 @@ namespace DungeonTest
         {
 	       Script script = new Script();
 	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
+
            Console.Write("[dungeontest] Initializing test mod");
 	       script.DoFile("mods/test.lua");
            Console.WriteLine("[dungeontest] test mod loaded!");
         }
-
-
+        
         protected override void Initialize()
         {
+            // load content first
             base.Initialize();
+
+            // load scripts
             EmbeddedResourceScriptLoader();
-            elapsedTimeWatch.Start();
+
+            // create main menu
             currentScreen = new Start();
         }
 
@@ -83,26 +89,25 @@ namespace DungeonTest
             if (currentScreen.RequestExit)
                 LeaveGame();
 
-            float deltaTime = GetDeltaTime();
+            float deltaTime = GetDeltaTime(gameTime);
 
             currentScreen = currentScreen.Update(deltaTime);
 
             base.Update(gameTime);
         }
 
-        float GetDeltaTime()
+        float GetDeltaTime(GameTime gameTime)
         {
-            float deltaTime = elapsedTimeWatch.ElapsedMilliseconds;
-            elapsedTimeWatch.Restart();
-
-            return deltaTime / 1000f;
+            float elapsedMilliseconds = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            return elapsedMilliseconds / 1000f;
         }
 
         void LeaveGame()
         {
             try {
                 Exit();
-            } catch (Exception e) { }
+            }
+            catch (Exception e) { }
         }
 
         protected override void Draw(GameTime gameTime)

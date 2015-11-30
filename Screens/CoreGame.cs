@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -40,6 +39,7 @@ namespace DungeonTest
 
         protected Player player = new Player();
         protected List<Player> players = new List<Player>();
+        protected Entity[] entityArray = new Entity[] { };
 
         protected bool initializing = true;
         protected bool loading = true;
@@ -63,6 +63,11 @@ namespace DungeonTest
                 debugging = !debugging;
 
             return this;
+        }
+
+        protected void UpdateEntityArray()
+        {
+            entityArray = players.Concat(Dungeon.entities).ToArray();
         }
 
         public override void Draw(GraphicsDevice GraphicsDevice, SpriteBatch spriteBatch)
@@ -95,7 +100,7 @@ namespace DungeonTest
             spriteBatch.Draw(canvas, Vector2.Zero, null, Color.White, 0, Vector2.Zero, GAME_SCALE, SpriteEffects.None, 0);
 
             if(debugging)
-                DrawFPS(spriteBatch);
+                DrawDebuggingInfo(spriteBatch);
 
             spriteBatch.End();
         }
@@ -115,17 +120,24 @@ namespace DungeonTest
             averagefps = (int)(averagefps / fps.Count);
         }
 
-        void DrawFPS(SpriteBatch spriteBatch)
+        void DrawStringRight(SpriteBatch spriteBatch, string text, float x, float y)
+        {
+            text = Tool.FormatString(text);
+
+            Vector2 stringSize = Tool.Font.MeasureString(text);
+
+            Vector2 offset = new Vector2(resolution.X - stringSize.X - x, y);
+
+            spriteBatch.DrawString(Tool.Font, text, offset, Color.White);
+
+        }
+
+        void DrawDebuggingInfo(SpriteBatch spriteBatch)
         {
             string fpsString = averagefps.ToString();
 
-            fpsString = Tool.FormatString(fpsString);
-
-            Vector2 stringSize = Tool.Font.MeasureString(fpsString);
-
-            Vector2 offset = new Vector2(resolution.X - stringSize.X, 0);
-
-            spriteBatch.DrawString(Tool.Font, fpsString, offset, Color.White);
+            DrawStringRight(spriteBatch, ServerHost.IPv4, 0, 0);
+            DrawStringRight(spriteBatch, fpsString, 0, 30);
         }
 
 
@@ -342,7 +354,7 @@ namespace DungeonTest
             float brightness = MIN_BRIGHTNESS;
             Vector2 coords = new Vector2(x, y);
 
-            foreach (Entity e in players.Concat(Dungeon.entities))
+            foreach (Entity e in entityArray)
             {
                 if (e.luminosity == 0)
                     continue;

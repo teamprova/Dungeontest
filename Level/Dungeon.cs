@@ -140,7 +140,7 @@ namespace DungeonTest
             //making pathways
             status = "CREATING PATHS";
 
-            for (int i = 0; i < roomsToMake; i++)
+            for (int i = 0; i < rooms.Count; i++)
             {
                 Rectangle room = rooms[i];
                 Rectangle closestRoom = FindClosestRoom(room, room);
@@ -153,9 +153,7 @@ namespace DungeonTest
             //place rooms
             status = "PLACING ROOMS";
 
-            for (int i = 0; i < roomsToMake; i++)
-            {
-                Rectangle room = rooms[i];
+            foreach (Rectangle room in rooms)
                 for (int x = room.X; x < room.X + room.Width; x++)
                 {
                     for (int y = room.Y; y < room.Y + room.Height; y++)
@@ -163,7 +161,6 @@ namespace DungeonTest
                         SetBlockAt(x, y, new Block(Block.WOOD, false));
                     }
                 }
-            }
 
             //set null blocks to solid cobble
             status = "PLACING BLOCKS";

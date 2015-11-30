@@ -15,6 +15,8 @@ namespace DungeonTest
         const int SIO_UDP_CONNRESET = -1744830452;
         const int UPDATESPEED = 1000 / 60;
 
+        public static string IPv4 = "";
+
         Thread joinListener;
         List<IPEndPoint> Clients = new List<IPEndPoint>();
         IPEndPoint ConnectingIP = new IPEndPoint(IPAddress.Any, PORT);
@@ -74,6 +76,8 @@ namespace DungeonTest
                 player.Update(player, deltaTime);
                 Dungeon.Update(player, deltaTime);
                 KickIdlePlayers(deltaTime);
+
+                UpdateEntityArray();
 
                 UpdateClients();
             }
@@ -251,7 +255,7 @@ namespace DungeonTest
 
             entityData[0] = (byte)Protocol.UPDATE_ENTITY_DATA;
 
-            foreach (Entity e in players.Concat(Dungeon.entities))
+            foreach (Entity e in entityArray)
             {
                 // create sendable format for the entity
                 byte[] sendableData = e.GetSendableFormat();

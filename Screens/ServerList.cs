@@ -133,7 +133,7 @@ namespace DungeonTest
         {
             IPAddress ServerIP;
 
-            if (IPAddress.TryParse(SelectedServer.IP, out ServerIP) && SelectedServer.IP != Program.getIPv4())
+            if (IPAddress.TryParse(SelectedServer.IP, out ServerIP))
                return new Client(ServerIP);
             return this;
         }

@@ -36,22 +36,26 @@ namespace DungeonTest
 
         public override Screen Update(float deltaTime)
         {
-            if (loading)
-                lastUpdate += deltaTime;
-            else
+            lastUpdate += deltaTime;
+
+            if (!loading)
+            {
                 player.Update(player, deltaTime);
+
+                UpdateEntityArray();
+            }
 
             if (lastUpdate >= MAX_IDLE_TIME)
             {
                 Dungeon.status = "CONNECTION FAILED";
                 timeSpentReading += deltaTime;
 
-                if ((loading && timeSpentReading > READ_TIME) || !loading)
+                if (timeSpentReading > READ_TIME || !loading)
                     return new Join();
             }
 
             SendUpdates();
-
+            
             return base.Update(deltaTime);
         }
 
