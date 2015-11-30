@@ -32,9 +32,23 @@ namespace DungeonTest
 	       Script script = new Script();
 	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
-           Console.Write("[dungeontest] Initializing test mod");
-	       script.DoFile("mods/test.lua");
-           Console.WriteLine("[dungeontest] test mod loaded!");
+           Console.Write("\n[dungeontest] Initializing test mod\n");
+           try
+           {
+               script.DoFile("mods/test.lua");
+           }
+           catch (ScriptRuntimeException ex)
+           {
+               Console.WriteLine("\n[dungeontest] error occured in loading mod: {0}\n", ex.DecoratedMessage);
+           }
+
+           Console.WriteLine("\n[dungeontest] test mod loaded!\n");
+        }
+
+        // API Error Handling (this does nothing currently)
+        static void DoError()
+        {
+            throw new ScriptRuntimeException("[dungeontest] fatal error occured!");
         }
         
         protected override void Initialize()
