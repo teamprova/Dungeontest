@@ -4,11 +4,6 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/acerio/Desktop/Dungeontest/Dungeontest/Content/Sprites/Blocks/cobble.png</File>
-    <File>C:/Users/acerio/Desktop/Dungeontest/Dungeontest/Content/Sprites/Blocks/wood.png</File>
-    <File>C:/Users/acerio/Desktop/Dungeontest/Dungeontest/Content/Sprites/Entities/player.png</File>
-    <File>C:/Users/acerio/Desktop/Dungeontest/Dungeontest/Content/Sprites/Floors/wood.png</File>
-    <File>C:/Users/acerio/Desktop/Dungeontest/Dungeontest/Content/Sprites/roof.png</File>
     <File>C:/Users/acerio/Desktop/Dungeontest/Dungeontest/Content/Fonts/default.png</File>
   </SourceFiles>
 </SourceFileCollection>

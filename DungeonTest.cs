@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Loaders;
 using System.Diagnostics;
@@ -32,17 +33,22 @@ namespace DungeonTest
 	       Script script = new Script();
 	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
-           Console.Write("\n[dungeontest] Initializing test mod\n");
-           try
+           String folderPath = "mods/";
+           foreach (String file in Directory.EnumerateFiles(folderPath, "*.lua"))
            {
-               script.DoFile("mods/test.lua");
-           }
-           catch (ScriptRuntimeException ex)
-           {
-               Console.WriteLine("\n[dungeontest] error occured in loading mod: {0}\n", ex.DecoratedMessage);
+               Console.Write("\n[dungeontest] initializing mod '{0}'\n", file);
+               try
+               {
+                   script.DoFile(file);
+                   Console.WriteLine("\n[dungeontest] mod '{0}' loaded!\n", file);
+               }
+               catch (ScriptRuntimeException ex)
+               {
+                   Console.WriteLine("\n[dungeontest] error occured in loading '{0}' mod: {1}\n", file, ex.DecoratedMessage);
+                   Console.WriteLine("\n[dungeontest] could not load '{0}' mod!\n", file);
+               }
            }
 
-           Console.WriteLine("\n[dungeontest] test mod loaded!\n");
         }
 
         // API Error Handling (this does nothing currently)
