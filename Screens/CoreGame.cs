@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -23,7 +24,7 @@ namespace DungeonTest
 
         // Test Stuff
         const int MAKE_ME_FEEL_TALLER = 0;
-        
+
         const float MIN_BRIGHTNESS = .2f;
 
         public static TextureData roofTextureData;
@@ -31,7 +32,7 @@ namespace DungeonTest
         static Vector2 STATUS_TEXT_POS = new Vector2(20, 20);
 
         Container loadingBar = new Container(20, 340, 0, 40);
-        
+
         Texture2D canvas;
         TextureData ctx = new TextureData(GAME_WIDTH, GAME_HEIGHT);
 
@@ -39,7 +40,7 @@ namespace DungeonTest
 
         protected Player player = new Player();
         protected List<Player> players = new List<Player>();
-        
+
         protected bool initializing = true;
         protected bool loading = true;
         protected int id = 0;
@@ -294,7 +295,7 @@ namespace DungeonTest
                         texturePos.Y = Math.Abs(texturePos.Y);
 
                         float brightness = GetBrightness(texturePos.X, texturePos.Y);
-                        
+
                         Block block = Dungeon.GetBlockAt(texturePos.X, texturePos.Y);
 
                         if (block != null)
@@ -350,7 +351,7 @@ namespace DungeonTest
 
                 Vector2 vectDist = coords - e.pos;
                 float distance = vectDist.Length();
-                
+
                 float lightFromEntity = e.luminosity;
 
                 if (distance != 0)

@@ -10,13 +10,16 @@ namespace DungeonTest
     /// </summary>
     public static class Program
     {
+
+        public static DungeonTest game;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-          using (DungeonTest game = new DungeonTest())
+            using (game = new DungeonTest())
             game.Run();
         }
 
@@ -30,6 +33,12 @@ namespace DungeonTest
             }
             return "null";
         }
+
+        public static void Close() {
+            using (game = new DungeonTest())
+            game.Exit();
+        }
+
     }
 #endif
 }
