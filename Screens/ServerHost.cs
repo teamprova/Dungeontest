@@ -63,20 +63,20 @@ namespace DungeonTest
             if (initializing && Dungeon.complete)
                 FinishInitialization();
 
-            if (loading)
-                return this;
-
-            if (Input.Tapped(Keys.F5) && Dungeon.complete)
+            if (!loading)
             {
-                initializing = true;
-                Dungeon.Generate();
+                if (Input.Tapped(Keys.F5) && Dungeon.complete)
+                {
+                    initializing = true;
+                    Dungeon.Generate();
+                }
+
+                player.Update(player, deltaTime);
+                Dungeon.Update(player, deltaTime);
+                KickIdlePlayers(deltaTime);
+
+                UpdateClients();
             }
-
-            player.Update(player, deltaTime);
-            Dungeon.Update(player, deltaTime);
-            KickIdlePlayers(deltaTime);
-
-            UpdateClients();
 
             return base.Update(deltaTime);
         }
