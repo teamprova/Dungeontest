@@ -56,17 +56,23 @@ namespace DungeonTest
         {
             throw new ScriptRuntimeException("[dungeontest] fatal error occured!");
         }
-        
+
         protected override void Initialize()
         {
             // load content first
+            Console.WriteLine("\n[dungeontest] loading game content\n");
             base.Initialize();
+            Console.WriteLine("\n[dungeontest] game content loaded\n");
 
             // load scripts
+            Console.WriteLine("\n[dungeontest] loading mods\n");
             EmbeddedResourceScriptLoader();
+            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
 
             // create main menu
+            Console.WriteLine("\n[dungeontest] main menu loading\n");
             currentScreen = new Start();
+            Console.WriteLine("\n[dungeontest] main menu loaded\n");
         }
 
         protected override void LoadContent()

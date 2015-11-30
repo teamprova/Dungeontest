@@ -1,3 +1,3 @@
 ﻿-- Another test
 
-print "\nayy lmao another mod loaded!";
+print "\n I am another mod printing to the console";

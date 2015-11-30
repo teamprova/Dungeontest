@@ -34,7 +34,7 @@ namespace DungeonTest
         {
             complete = false;
             status = "";
-
+            Console.WriteLine("\n[dungeontest] starting map generation\n");
             generationThread = new Thread(new ThreadStart(GeneratorThread));
             generationThread.IsBackground = true;
             generationThread.Start();
@@ -72,11 +72,15 @@ namespace DungeonTest
             UpdateData();
 
             complete = true;
+
+            Console.WriteLine("\n[dungeontest] map generation complete\n");
+
         }
 
         static void MakeRooms()
         {// Generate the rooms
             status = "MAKING ROOMS";
+            Console.WriteLine("\n[dungeontest] generating rooms in map\n");
 
             for (int i = 0; i < roomsToMake; i++)
             {
@@ -102,6 +106,7 @@ namespace DungeonTest
         static void SquashRooms()
         {
             status = "SQUISHING ROOMS";
+            Console.WriteLine("\n[dungeontest] squishing rooms in map\n");
 
             for (var i = 0; i < 10; i++)
             {
@@ -139,6 +144,7 @@ namespace DungeonTest
         {
             //making pathways
             status = "CREATING PATHS";
+            Console.WriteLine("\n[dungeontest] generating pathways\n");
 
             for (int i = 0; i < rooms.Count; i++)
             {
@@ -152,6 +158,7 @@ namespace DungeonTest
 
             //place rooms
             status = "PLACING ROOMS";
+            Console.WriteLine("\n[dungeontest] placing pathways\n");
 
             foreach (Rectangle room in rooms)
                 for (int x = room.X; x < room.X + room.Width; x++)
@@ -164,6 +171,7 @@ namespace DungeonTest
 
             //set null blocks to solid cobble
             status = "PLACING BLOCKS";
+            Console.WriteLine("\n[dungeontest] placing blocks\n");
 
             for (int x = 0; x < WIDTH; x++)
                 for (int y = 0; y < HEIGHT; y++)
