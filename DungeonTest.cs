@@ -27,7 +27,7 @@ namespace DungeonTest
             IsFixedTimeStep = false;
         }
 
-        // Load a testing mod
+        // Load mods
         static void EmbeddedResourceScriptLoader()
         {
 	       Script script = new Script();
