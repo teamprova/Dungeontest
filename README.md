@@ -16,3 +16,9 @@ This is not complete currently, but we do have a Lua interpreter. We use Moon#, 
 
 ###### Rendering Engine
 We are currently using a Raycasting engine to create a 3D space, even though all of the logic is in 2D.
+
+###### Multiplayer
+Uses .Net UdpClients. Currently featuring sending map data, sending entity data, and kicking idle players.
+
+###### Inputs
+Loosly based on Windows Forms controls, has buttons, text inputs, and containers.
