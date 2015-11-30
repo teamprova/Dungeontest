@@ -241,8 +241,6 @@ namespace DungeonTest
 
                         if (texturePos.X < 0 || texturePos.Y < 0)
                             continue;
-                        //texturePos.X = Math.Abs(texturePos.X);
-                        //texturePos.Y = Math.Abs(texturePos.Y);
 
                         float brightness = GetBrightness(texturePos.X, texturePos.Y) / 2;
 

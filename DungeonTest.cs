@@ -37,13 +37,13 @@ namespace DungeonTest
             Tool.CreateBackground(GraphicsDevice);
             Tool.Font = Content.Load<SpriteFont>("Fonts/default");
             
-            Player.frontSprite = new TextureData(Content, "Sprites/Entities/player");
-            Enemy.sprite = new TextureData(Content, "Sprites/Entities/player");
+            Player.frontSprite = new TextureData("Content/Sprites/Entities/player.png");
+            Enemy.sprite = new TextureData("Content/Sprites/Entities/player.png");
 
             //blocks
-            CoreGame.roofTextureData = new TextureData(Content, "Sprites/roof");
-            Block.Cobble = new TextureData(Content, "Sprites/Blocks/cobble");
-            Block.Wood = new TextureData(Content, "Sprites/Blocks/wood");
+            CoreGame.roofTextureData = new TextureData("Content/Sprites/roof.png");
+            Block.Cobble = new TextureData("Content/Sprites/Blocks/cobble.png");
+            Block.Wood = new TextureData("Content/Sprites/Blocks/wood.png");
         }
 
         protected override void UnloadContent()
