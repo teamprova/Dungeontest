@@ -1,6 +1,5 @@
 ﻿-- Mod testing
 
-local enemy = dungeon:SpawnEntity(0, 5, 3);
-return enemy;
---dungeon.MIN_ROOM_SIZE = 50;
---dungeon.MAX_ROOM_SIZE = 100;
+--if input:Held(Keys.K) then
+--    dungeon:SpawnGenericEntity("Content/Sprites/Entities/player.png", 5, 3);
+--end

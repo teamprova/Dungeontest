@@ -70,13 +70,13 @@ namespace DungeonTest
             newController = GamePad.GetState(PlayerIndex.One);
 
             GamePadThumbSticks ThumbStick = newController.ThumbSticks;
-            
+
             Vector2 newMovement = ThumbStick.Left;
             Vector2 newDeltaMouse = ThumbStick.Right * 12;
 
             if (newMovement.Length() > movement.Length())
                 movement = newMovement;
-            
+
             if (newDeltaMouse.Length() > deltaMouse.Length())
                 deltaMouse = newDeltaMouse;
 
