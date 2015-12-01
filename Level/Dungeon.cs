@@ -55,6 +55,7 @@ namespace DungeonTest
             UpdateData();
 
             complete = true;
+            Console.WriteLine("\n[dungeontest] map generation complete\n");
         }
 
         public static void Clear()

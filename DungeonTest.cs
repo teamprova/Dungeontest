@@ -99,8 +99,6 @@ namespace DungeonTest
             Tool.CreateBackground(GraphicsDevice);
             Tool.Font = Content.Load<SpriteFont>("Fonts/default");
             CoreGame.roofTextureData = new TextureData("Content/Sprites/roof.png");
-
-            Console.WriteLine("\n[dungeontest] map generation complete\n");
         }
 
         protected override void UnloadContent()
