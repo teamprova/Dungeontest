@@ -27,13 +27,19 @@ namespace DungeonTest
             IsFixedTimeStep = false;
         }
 
-        // Load mods
+        // Mod API stuff
         static void EmbeddedResourceScriptLoader()
         {
-	       Script script = new Script();
+           // Set script loader
+           Script script = new Script();
 	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
-           String folderPath = "mods/";
+           // Script Loader Base
+           ((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
+           ((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
+
+           // Load mods
+           String folderPath = ""; // this used to say "mods/" until I added a script loader
            foreach (String file in Directory.EnumerateFiles(folderPath, "*.lua"))
            {
                Console.Write("\n[dungeontest] initializing mod '{0}'\n", file);
