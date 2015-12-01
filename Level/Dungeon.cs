@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace DungeonTest
 {
-    static class Dungeon
+    class Dungeon
     {
         public const int WIDTH = 100;
         public const int HEIGHT = 100;
@@ -29,7 +29,7 @@ namespace DungeonTest
         static float roomsToMake = 0;
 
         public static Thread generationThread;
-        
+
         #region Generator
         public static void Generate()
         {
@@ -75,6 +75,11 @@ namespace DungeonTest
             complete = true;
 
             Console.WriteLine("\n[dungeontest] map generation complete\n");
+
+            // load scripts
+            Console.WriteLine("\n[dungeontest] loading mods\n");
+            DungeonTest.EmbeddedResourceScriptLoader();
+            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
 
         }
 
@@ -302,6 +307,8 @@ namespace DungeonTest
             TextureData sprite = new TextureData(src);
 
             entities.Add(new Entity(sprite, x, y, 0));
+
+
         }
 
         public static void MoveToSpawn(Entity e)

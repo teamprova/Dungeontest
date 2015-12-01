@@ -1,3 +1,4 @@
-﻿-- This is a lua file, being run with the new API!
-
-print "\nThis is here because this mod prints to the console!";
+﻿-- Create an entity
+dungeon.SpawnGenericEntity("Content/Sprites/Entities/player.png", 5, 3);
+--dungeon.MIN_ROOM_SIZE = 50;
+--dungeon.MAX_ROOM_SIZE = 100;

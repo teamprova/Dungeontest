@@ -28,15 +28,14 @@ namespace DungeonTest
         }
 
         // Mod API stuff
-        static void EmbeddedResourceScriptLoader()
+        public static void EmbeddedResourceScriptLoader()
         {
            // Set script loader
-           Script script = new Script();
-	   Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
+	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
            // Script Loader Base
-           ((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
-           ((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
+           //((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
+           //((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
 
            // Load mods
            String folderPath = "mods/";
@@ -45,8 +44,22 @@ namespace DungeonTest
                Console.Write("\n[dungeontest] initializing mod '{0}'\n", file);
                try
                {
+
+                   UserData.RegisterType<Dungeon>();
+                   Script script = new Script();
+                   DynValue dungeon = UserData.Create(new Dungeon());
+                   script.Globals.Set("dungeon", dungeon);
+
+                   // Load the file
                    script.DoFile(file);
+
+                   // Pass classes to code
+                   //UserData.RegisterType<EventArgs>();
+                   //UserData.RegisterType<Dungeon>();
+
+                   // Log completion
                    Console.WriteLine("\n[dungeontest] mod '{0}' loaded!\n", file);
+
                }
                catch (ScriptRuntimeException ex)
                {
@@ -69,11 +82,6 @@ namespace DungeonTest
             Console.WriteLine("\n[dungeontest] loading game content\n");
             base.Initialize();
             Console.WriteLine("\n[dungeontest] game content loaded\n");
-
-            // load scripts
-            Console.WriteLine("\n[dungeontest] loading mods\n");
-            EmbeddedResourceScriptLoader();
-            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
 
             // create main menu
             Console.WriteLine("\n[dungeontest] main menu loading\n");
