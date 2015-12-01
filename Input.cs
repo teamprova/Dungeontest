@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DungeonTest
 {
-    public static class Input
+    public class Input
     {
         static GamePadState oldController = GamePad.GetState(PlayerIndex.One);
         static GamePadState newController = GamePad.GetState(PlayerIndex.One);
@@ -70,13 +70,13 @@ namespace DungeonTest
             newController = GamePad.GetState(PlayerIndex.One);
 
             GamePadThumbSticks ThumbStick = newController.ThumbSticks;
-            
+
             Vector2 newMovement = ThumbStick.Left;
             Vector2 newDeltaMouse = ThumbStick.Right * 12;
 
             if (newMovement.Length() > movement.Length())
                 movement = newMovement;
-            
+
             if (newDeltaMouse.Length() > deltaMouse.Length())
                 deltaMouse = newDeltaMouse;
 

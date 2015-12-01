@@ -75,11 +75,7 @@ namespace DungeonTest
             complete = true;
 
             Console.WriteLine("\n[dungeontest] map generation complete\n");
-
-            // load scripts
-            Console.WriteLine("\n[dungeontest] loading mods\n");
-            DungeonTest.EmbeddedResourceScriptLoader();
-            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
+        
 
         }
 

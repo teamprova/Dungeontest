@@ -46,9 +46,12 @@ namespace DungeonTest
                {
 
                    UserData.RegisterType<Dungeon>();
+                   UserData.RegisterType<Input>();
                    Script script = new Script();
                    DynValue dungeon = UserData.Create(new Dungeon());
                    script.Globals.Set("dungeon", dungeon);
+                   DynValue input = UserData.Create(new Input());
+                   script.Globals.Set("input", input);
 
                    // Load the file
                    script.DoFile(file);
@@ -104,6 +107,12 @@ namespace DungeonTest
             CoreGame.roofTextureData = new TextureData("Content/Sprites/roof.png");
             Block.CementBrick = new TextureData("Content/Sprites/Blocks/brick.png");
             Block.Cement = new TextureData("Content/Sprites/Blocks/cement.png");
+
+            // load scripts
+            Console.WriteLine("\n[dungeontest] loading mods\n");
+            DungeonTest.EmbeddedResourceScriptLoader();
+            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
+
         }
 
         protected override void UnloadContent()
