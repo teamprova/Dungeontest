@@ -5,7 +5,7 @@ testEntityID = 0;
 --if input:Held(Keys.K) then
 function PostGenerate()
 	testEntityID = API:ClaimID("test", "Content/Sprites/Entities/player.png"); -- Create an entity
-	
+
 	--spawn entity ten times
 	for i = 1, 10 do
 		SpawnEntity()
@@ -13,8 +13,8 @@ function PostGenerate()
 end
 
 function SpawnEntity()
-	print("\n[dungeontest] creating entity 'blackGuy'\n");
-	
+	--print("\n[dungeontest] creating entity 'blackGuy'\n");
+
 	local x = 0;
 	local y = 0;
 	local block = API:GetBlock(x, y);
@@ -26,5 +26,5 @@ function SpawnEntity()
 	end
 
 	API:SpawnEntity(testEntityID, x, y); -- Spawn the entity
-	print("\n[dungeontest] spawning entity 'blackGuy'\n");
+	--print("\n[dungeontest] spawning entity 'blackGuy'\n");
 end

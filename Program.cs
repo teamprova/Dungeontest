@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
@@ -21,8 +22,12 @@ namespace DungeonTest
         {
             ServerHost.IPv4 = getIPv4();
 
-            using (game = new DungeonTest())
-            game.Run();
+            using (StreamWriter writer = new StreamWriter("debug.txt"))
+            {
+                Console.SetOut(writer);
+                using (game = new DungeonTest())
+                game.Run();
+            }
         }
 
         public static string getIPv4()

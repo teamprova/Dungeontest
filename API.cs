@@ -10,14 +10,36 @@ namespace DungeonTest
     {
         public static int ClaimID(string name, string src)
         {
-            return Dungeon.ClaimID(name, src);
+            int id = CoreGame.sprites.Count;
+            Console.WriteLine("\n[dungeontest] creating entity '{0}' under id '{1}'\n", name, id);
+
+            try {
+                //add name to sprite list
+                CoreGame.spriteNames.Add(name);
+
+                //add sprite to sprite list
+                CoreGame.sprites.Add(new TextureData(src));
+
+                Console.WriteLine("\n[dungeontest] created entity '{0}' under id '{1}'\n", name, id);
+
+            } catch (Exception ex) {
+                Console.WriteLine("\n[dungeontest] error occured when spawning entity '{0}' under id '{1}'. error: {2}\n", name, id, ex.Message);
+            }
+
+            return id;
+
         }
 
         public static void SpawnEntity(int id, float x, float y)
         {
             Entity myEntity = new Entity(id, x, y);
-
-            Dungeon.entities.Add(myEntity);
+            Console.WriteLine("\n[dungeontest] spawning entity '{0}'\n", id);
+            try {
+                Dungeon.entities.Add(myEntity);
+                Console.WriteLine("\n[dungeontest] entity '{0}' spawned\n", id);
+            } catch (Exception ex) {
+                Console.WriteLine("\n[dungeontest] error occured when spawning '{0}'. error: {1}\n", id, ex.Message);
+            }
         }
 
         public static object GetBlock(int x, int y)
@@ -80,7 +102,7 @@ namespace DungeonTest
         // API Error Handling (this does nothing currently)
         static void DoError()
         {
-            throw new ScriptRuntimeException("[dungeontest] fatal error occured!");
+            throw new ScriptRuntimeException("\n[dungeontest] fatal error occured!\n");
         }
 
         // implemented methods:
@@ -104,7 +126,7 @@ namespace DungeonTest
             }
             catch (Exception e)
             {
-                Console.WriteLine("[dungeontest] error occured " + e.Message);
+                Console.WriteLine("\n[dungeontest] method call error: " + e.Message + "\n");
             }
         }
     }

@@ -305,20 +305,6 @@ namespace DungeonTest
 
         // Modders may find this useful
         #region Tools
-        // used for creating sprites for blocks/entities
-        // naming is so we can tell what type of (x) this is
-        public static int ClaimID(string name, string src)
-        {
-            int id = CoreGame.sprites.Count;
-
-            //add name to sprite list
-            CoreGame.spriteNames.Add(name);
-
-            //add sprite to sprite list
-            CoreGame.sprites.Add(new TextureData(src));
-
-            return id;
-        }
 
         public static void MoveToSpawn(Entity e)
         {

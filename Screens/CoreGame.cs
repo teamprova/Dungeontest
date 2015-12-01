@@ -63,11 +63,11 @@ namespace DungeonTest
 
         protected void LoadDefaultSprites()
         {
-            Dungeon.ClaimID("Player", "Content/Sprites/Entities/player.png");
-            Dungeon.ClaimID("Cement", "Content/Sprites/Blocks/cement.png");
-            Dungeon.ClaimID("CementBricks", "Content/Sprites/Blocks/brick.png");
+            API.ClaimID("Player", "Content/Sprites/Entities/player.png");
+            API.ClaimID("Cement", "Content/Sprites/Blocks/cement.png");
+            API.ClaimID("CementBricks", "Content/Sprites/Blocks/brick.png");
         }
-        
+
         public override Screen Update(float deltaTime)
         {
             GetFPS(deltaTime);
