@@ -166,7 +166,7 @@ namespace DungeonTest
                 {
                     for (int y = room.Y; y < room.Y + room.Height; y++)
                     {
-                        SetBlockAt(x, y, new Block(Block.WOOD, false));
+                        SetBlockAt(x, y, new Block(Block.CEMENT, false));
                     }
                 }
 
@@ -178,7 +178,7 @@ namespace DungeonTest
                 for (int y = 0; y < HEIGHT; y++)
                 {
                     if (GetBlockAt(x, y) == null)
-                        SetBlockAt(x, y, new Block(Block.COBBLE, true));
+                        SetBlockAt(x, y, new Block(Block.CEMENT_BRICK, true));
                 }
         }
 
@@ -209,7 +209,7 @@ namespace DungeonTest
                         pointB.Y++;
                 }
 
-                SetBlockAt(pointB.X, pointB.Y, new Block(Block.WOOD, false));
+                SetBlockAt(pointB.X, pointB.Y, new Block(Block.CEMENT, false));
             }
         }
 
