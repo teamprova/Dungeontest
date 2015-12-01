@@ -7,14 +7,14 @@ namespace DungeonTest
 {
     class Dungeon
     {
-        public const int WIDTH = 100;
-        public const int HEIGHT = 100;
+        public static int WIDTH = 100;
+        public static int HEIGHT = 100;
 
         const double TAU = Math.PI * 2;
-        const int MIN_ROOM_SIZE = 8;
-        const int MAX_ROOM_SIZE = 15;
-        const int MIN_ROOMS = 25;
-        const int MAX_ROOMS = 50;
+        public static int MIN_ROOM_SIZE = 8;
+        public static int MAX_ROOM_SIZE = 15;
+        public static int MIN_ROOMS = 25;
+        public static int MAX_ROOMS = 50;
 
         public static List<Entity> entities = new List<Entity>();
         public static Block[,] map = new Block[HEIGHT, WIDTH];
