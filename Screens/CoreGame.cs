@@ -183,7 +183,7 @@ namespace DungeonTest
                 Vector2 collision;
 
                 //cast rays
-                float dist = Dungeon.CastRay(player, rayAngle, i, out block, out textureX, out collision);
+                float dist = Dungeon.CastRay(player, rayAngle, out block, out textureX, out collision);
                 RoofCast(rayAngle, i, bob);
                 FloorCast(rayAngle, i, bob);
 

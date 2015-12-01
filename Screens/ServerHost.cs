@@ -277,9 +277,7 @@ namespace DungeonTest
                 foreach (IPEndPoint ClientIP in Clients)
                     Updater.Send(entityData, entityData.Length, ClientIP);
             }
-            catch (Exception e)
-            {
-            }
+            catch (Exception) { }
         }
 
         protected Entity GrabEntity(int id)

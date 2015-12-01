@@ -14,7 +14,7 @@ namespace DungeonTest
         public static TextureData frontSprite;
 
         public Player()
-            : base(Dungeon.spawn.X, Dungeon.spawn.Y, frontSprite, 1)
+            : base(frontSprite, Dungeon.spawn.X, Dungeon.spawn.Y, 1)
         {
         }
 

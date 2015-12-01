@@ -11,7 +11,7 @@ namespace DungeonTest
         float enemySpeed = 1f;
 
         public Enemy(float x, float y)
-            : base (x, y, sprite, 2)
+            : base(sprite, x, y, 2)
         {
             vel = new Vector2(1, 0);
             //vel = Vector2.Transform(vel, Matrix.CreateRotationZ((float)(rnd.NextDouble() * Math.PI * 2)));

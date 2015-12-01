@@ -98,7 +98,7 @@ namespace DungeonTest
                                 break;
                         }
                     }
-                    catch (Exception e) { }
+                    catch (Exception) { }
                 }
             }
         }

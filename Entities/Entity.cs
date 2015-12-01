@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DungeonTest
 {
-    abstract class Entity
+    class Entity
     {
         public Vector2 pos = Vector2.Zero;
         public Vector2 vel = Vector2.Zero;
@@ -14,7 +14,7 @@ namespace DungeonTest
 
         public TextureData spriteData;
 
-        public Entity(float x, float y, TextureData sprite, int id)
+        public Entity(TextureData sprite, float x, float y, int id)
         {
             pos = new Vector2(x, y);
 
@@ -23,7 +23,7 @@ namespace DungeonTest
             spriteData = sprite;
         }
 
-        public abstract void Update(Player player, float deltaTime);
+        public virtual void Update(Player player, float deltaTime){}
 
         public virtual void AI(int action, Player player, float speed, float deltaTime)
         {

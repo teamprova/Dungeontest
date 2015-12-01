@@ -29,7 +29,8 @@ namespace DungeonTest
         static float roomsToMake = 0;
 
         public static Thread generationThread;
-
+        
+        #region Generator
         public static void Generate()
         {
             complete = false;
@@ -250,7 +251,9 @@ namespace DungeonTest
             }
             return closest;
         }
+        #endregion
 
+        #region Multiplayer
         static void UpdateData()
         {
             // 9 = protocol + spawn position
@@ -290,11 +293,30 @@ namespace DungeonTest
                     SetBlockAt(x, y, new Block(type, solid));
                 }
         }
+        #endregion
 
-        public static void Update(Player player, float deltaTime)
+        #region Tools
+        // For modders
+        public static void SpawnGenericEntity(string src, float x, float y)
         {
-            foreach (Entity e in entities)
-                e.Update(player, deltaTime);
+            TextureData sprite = new TextureData(src);
+
+            entities.Add(new Entity(sprite, x, y, 0));
+        }
+
+        public static void MoveToSpawn(Entity e)
+        {
+            e.pos.X = spawn.X;
+            e.pos.Y = spawn.Y;
+        }
+
+        // For when all you want is to find the nearest block and measure the dist
+        public static float CastRay(Entity e, double rayAngle, out Vector2 collision)
+        {
+            float textureX;
+            Block block;
+
+            return CastRay(e, rayAngle, out block, out textureX, out collision);
         }
 
         public static bool IsBlocking(Vector2 pos)
@@ -324,10 +346,10 @@ namespace DungeonTest
             return GetBlockAt((int)x, (int)y);
         }
 
-        public static void SetBlockAt(double x, double y, Block block)
+        public static void SetBlockAt(int x, int y, Block block)
         {
             if (IsWithin(x, y))
-                map[(int)y, (int)x] = block;
+                map[y, x] = block;
         }
 
         public static bool IsWithin(int x, int y)
@@ -339,14 +361,16 @@ namespace DungeonTest
         {
             return IsWithin((int)x, (int)y);
         }
+        #endregion
 
-        public static void MoveToSpawn(Player player)
+        #region GameLoop
+        public static void Update(Player player, float deltaTime)
         {
-            player.pos.X = spawn.X;
-            player.pos.Y = spawn.Y;
+            foreach (Entity e in entities)
+                e.Update(player, deltaTime);
         }
 
-        public static float CastRay(Entity e, double rayAngle, int stripIdx, out Block block, out float textureX, out Vector2 collision)
+        public static float CastRay(Entity e, double rayAngle, out Block block, out float textureX, out Vector2 collision)
         {
             // Make sure the angle is between 0 and 360 degrees
             if (rayAngle < 0)
@@ -367,7 +391,7 @@ namespace DungeonTest
             //out variables
             textureX = 0;
             collision = new Vector2(0, 0);
-            block = null;
+            block = new Block(0, false);
 
             // First check against the vertical map/wall lines
             // we do this by moving to the right or left edge
@@ -456,5 +480,6 @@ namespace DungeonTest
 
             return dist.Length();
         }
+        #endregion
     }
 }

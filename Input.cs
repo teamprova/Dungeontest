@@ -109,7 +109,7 @@ namespace DungeonTest
             {
                 Mouse.SetPosition(x, y);
             }
-            catch (Exception e)
+            catch (Exception)
             { }
         }
 

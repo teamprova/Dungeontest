@@ -132,8 +132,7 @@ namespace DungeonTest
         {
             try {
                 Exit();
-            }
-            catch (Exception e) { }
+            } catch (Exception) { }
         }
 
         protected override void Draw(GameTime gameTime)
