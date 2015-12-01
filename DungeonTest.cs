@@ -39,7 +39,7 @@ namespace DungeonTest
            ((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
 
            // Load mods
-           String folderPath = ""; // this used to say "mods/" until I added a script loader
+           String folderPath = "mods/";
            foreach (String file in Directory.EnumerateFiles(folderPath, "*.lua"))
            {
                Console.Write("\n[dungeontest] initializing mod '{0}'\n", file);
