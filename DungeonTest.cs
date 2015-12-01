@@ -88,8 +88,8 @@ namespace DungeonTest
 
             //blocks
             CoreGame.roofTextureData = new TextureData("Content/Sprites/roof.png");
-            Block.Cobble = new TextureData("Content/Sprites/Blocks/cobble.png");
-            Block.Wood = new TextureData("Content/Sprites/Blocks/wood.png");
+            Block.CementBrick = new TextureData("Content/Sprites/Blocks/brick.png");
+            Block.Cement = new TextureData("Content/Sprites/Blocks/cement.png");
         }
 
         protected override void UnloadContent()

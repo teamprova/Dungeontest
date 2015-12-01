@@ -5,11 +5,11 @@ namespace DungeonTest
 {
     class Block
     {
-        public const byte COBBLE = 0;
-        public const byte WOOD = 1;
+        public const byte CEMENT = 0;
+        public const byte CEMENT_BRICK = 1;
 
-        public static TextureData Cobble;
-        public static TextureData Wood;
+        public static TextureData Cement;
+        public static TextureData CementBrick;
 
         //texture for the block to use when drawn
         public TextureData texture;
@@ -23,14 +23,12 @@ namespace DungeonTest
             isSolid = solid;
 
             blockType = block;
-            texture = Cobble;
+            texture = Cement;
             
             switch (block)
             {
-                case COBBLE:
-                    break;
-                case WOOD:
-                    texture = Wood;
+                case CEMENT_BRICK:
+                    texture = CementBrick;
                     break;
             }
         }
