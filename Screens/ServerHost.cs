@@ -25,11 +25,11 @@ namespace DungeonTest
         byte[] entityData = new byte[] { };
 
         public ServerHost()
-            : base()
         {
-            Dungeon.Generate();
-
+            ClearSprites();
             LoadDefaultSprites();
+
+            Dungeon.Generate();
 
             players.Add(player);
         }

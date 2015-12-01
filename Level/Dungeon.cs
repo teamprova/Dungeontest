@@ -37,7 +37,12 @@ namespace DungeonTest
         {
             complete = false;
             status = "";
+            Clear();
+
             Console.WriteLine("\n[dungeontest] starting map generation\n");
+
+            ModHandler.RunEvent("PreGenerate");
+
             generationThread = new Thread(new ThreadStart(GeneratorThread));
             generationThread.IsBackground = true;
             generationThread.Start();
@@ -47,7 +52,6 @@ namespace DungeonTest
         {
             // Variables for the room
             roomsToMake = rnd.Next(MIN_ROOMS, MAX_ROOMS); // Random room count
-            Clear();
 
             MakeRooms();
             SquashRooms();
@@ -55,13 +59,17 @@ namespace DungeonTest
             UpdateData();
 
             complete = true;
+
+            ModHandler.RunEvent("PostGenerate");
+
             Console.WriteLine("\n[dungeontest] map generation complete\n");
         }
 
         public static void Clear()
         {
-            rooms.Clear();
             map = new Block[WIDTH, HEIGHT];
+            entities.Clear();
+            rooms.Clear();
         }
 
         public static float GetProgress()
@@ -271,7 +279,7 @@ namespace DungeonTest
                     Block block = GetBlockAt(x, y);
 
                     mapData[i] = block.blockType;
-                    mapData[i + 1] = BitConverter.GetBytes(block.isSolid)[0];
+                    mapData[i + 1] = BitConverter.GetBytes(block.solid)[0];
                 }
         }
 
@@ -312,13 +320,6 @@ namespace DungeonTest
             return id;
         }
 
-        public static void SpawnEntity(int id, float x, float y)
-        {
-            Entity myEntity = new Entity(id, x, y);
-
-            entities.Add(myEntity);
-        }
-
         public static void MoveToSpawn(Entity e)
         {
             e.pos.X = spawn.X;
@@ -346,7 +347,7 @@ namespace DungeonTest
             if (block == null)
                 return true;
 
-            return block.isSolid;
+            return block.solid;
         }
 
         public static Block GetBlockAt(int x, int y)
@@ -382,6 +383,7 @@ namespace DungeonTest
         public static void Update()
         {
             // TODO: Mod entity updates here
+            ModHandler.RunEvent("Update");
         }
 
         public static float CastRay(Entity e, double rayAngle, out Block block, out float textureX, out Vector2 collision)

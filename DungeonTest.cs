@@ -1,12 +1,7 @@
 using System;
-using System.IO;
-using MoonSharp.Interpreter;
-using MoonSharp.Interpreter.Loaders;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Threading;
 
 namespace DungeonTest
 {
@@ -25,57 +20,6 @@ namespace DungeonTest
 
             // Fixes the weird update issues and allows the game run at higher frame rates
             IsFixedTimeStep = false;
-        }
-
-        // Mod API stuff
-        public static void EmbeddedResourceScriptLoader()
-        {
-           // Set script loader
-	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
-
-           // Script Loader Base
-           //((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
-           //((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
-
-           // Load mods
-           String folderPath = "mods/";
-           foreach (String file in Directory.EnumerateFiles(folderPath, "*.lua"))
-           {
-               Console.Write("\n[dungeontest] initializing mod '{0}'\n", file);
-               try
-               {
-                   UserData.RegisterType<Dungeon>();
-                   UserData.RegisterType<Input>();
-                   Script script = new Script();
-                   DynValue dungeon = UserData.Create(new Dungeon());
-                   script.Globals.Set("dungeon", dungeon);
-                   DynValue input = UserData.Create(new Input());
-                   script.Globals.Set("input", input);
-
-                   // Load the file
-                   script.DoFile(file);
-
-                   // Pass classes to code
-                   //UserData.RegisterType<EventArgs>();
-                   //UserData.RegisterType<Dungeon>();
-
-                   // Log completion
-                   Console.WriteLine("\n[dungeontest] mod '{0}' loaded!\n", file);
-
-               }
-               catch (ScriptRuntimeException ex)
-               {
-                   Console.WriteLine("\n[dungeontest] error occured in loading '{0}' mod: {1}\n", file, ex.DecoratedMessage);
-                   Console.WriteLine("\n[dungeontest] could not load '{0}' mod!\n", file);
-               }
-           }
-
-        }
-
-        // API Error Handling (this does nothing currently)
-        static void DoError()
-        {
-            throw new ScriptRuntimeException("[dungeontest] fatal error occured!");
         }
 
         protected override void Initialize()
@@ -102,7 +46,7 @@ namespace DungeonTest
 
             // Load mods
             Console.WriteLine("\n[dungeontest] loading mods\n");
-            EmbeddedResourceScriptLoader();
+            ModHandler.LoadMods();
             Console.WriteLine("\n[dungeontest] mods have been loaded\n");
 
         }

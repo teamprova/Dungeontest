@@ -19,8 +19,9 @@ namespace DungeonTest
         float lastUpdate = 0;
 
         public Client(IPAddress IP)
-            : base()
         {
+            ClearSprites();
+
             Dungeon.status = "CONNECTING";
             Dungeon.Clear();
 

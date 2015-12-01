@@ -55,7 +55,7 @@ namespace DungeonTest
         public int headBob = 0;
         double bobAngle = 0;
 
-        public CoreGame()
+        public void ClearSprites()
         {
             sprites.Clear();
             spriteNames.Clear();

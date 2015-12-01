@@ -4,11 +4,11 @@ namespace DungeonTest
     class SinglePlayer : CoreGame
     {
         public SinglePlayer()
-            : base()
         {
-            Dungeon.Generate();
-
+            ClearSprites();
             LoadDefaultSprites();
+
+            Dungeon.Generate();
 
             players.Add(player);
         }

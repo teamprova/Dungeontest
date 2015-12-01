@@ -3,15 +3,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DungeonTest
 {
-    class Block
+    public class Block
     {
         // raycast engine only draws solid blocks
-        public bool isSolid;
+        public bool solid;
         public byte blockType = 0;
 
-        public Block(byte block, bool solid)
+        public Block(byte block, bool isSolid)
         {
-            isSolid = solid;
+            solid = isSolid;
 
             blockType = block;
         }
@@ -39,7 +39,7 @@ namespace DungeonTest
 
         public override void Interact()
         {
-            isSolid = !isSolid;
+            solid = !solid;
         }
     }
 }

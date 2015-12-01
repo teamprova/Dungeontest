@@ -41,6 +41,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="API.cs" />
     <Compile Include="Level\Block.cs" />
     <Compile Include="DungeonTest.cs" />
     <Compile Include="Level\Dungeon.cs" />
