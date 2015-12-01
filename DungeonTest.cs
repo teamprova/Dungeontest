@@ -32,7 +32,7 @@ namespace DungeonTest
         {
            // Set script loader
            Script script = new Script();
-	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
+	   Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
            // Script Loader Base
            ((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
