@@ -27,13 +27,19 @@ namespace DungeonTest
             IsFixedTimeStep = false;
         }
 
-        // Load mods
+        // Mod API stuff
         static void EmbeddedResourceScriptLoader()
         {
-	       Script script = new Script();
+           // Set script loader
+           Script script = new Script();
 	       Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
-           String folderPath = "mods/";
+           // Script Loader Base
+           ((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
+           ((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
+
+           // Load mods
+           String folderPath = ""; // this used to say "mods/" until I added a script loader
            foreach (String file in Directory.EnumerateFiles(folderPath, "*.lua"))
            {
                Console.Write("\n[dungeontest] initializing mod '{0}'\n", file);
@@ -88,8 +94,8 @@ namespace DungeonTest
 
             //blocks
             CoreGame.roofTextureData = new TextureData("Content/Sprites/roof.png");
-            Block.Cobble = new TextureData("Content/Sprites/Blocks/cobble.png");
-            Block.Wood = new TextureData("Content/Sprites/Blocks/wood.png");
+            Block.CementBrick = new TextureData("Content/Sprites/Blocks/brick.png");
+            Block.Cement = new TextureData("Content/Sprites/Blocks/cement.png");
         }
 
         protected override void UnloadContent()
