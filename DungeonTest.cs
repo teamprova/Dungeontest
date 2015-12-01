@@ -99,6 +99,12 @@ namespace DungeonTest
             Tool.CreateBackground(GraphicsDevice);
             Tool.Font = Content.Load<SpriteFont>("Fonts/default");
             CoreGame.roofTextureData = new TextureData("Content/Sprites/roof.png");
+
+            // Load mods
+            Console.WriteLine("\n[dungeontest] loading mods\n");
+            EmbeddedResourceScriptLoader();
+            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
+
         }
 
         protected override void UnloadContent()

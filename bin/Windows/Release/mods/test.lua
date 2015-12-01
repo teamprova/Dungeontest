@@ -1,5 +1,8 @@
 ﻿-- Mod testing
 
 --if input:Held(Keys.K) then
---    dungeon:SpawnGenericEntity("Content/Sprites/Entities/player.png", 5, 3);
+print("\n[dungeontest] creating entity 'blackGuy'\n");
+local blackGuy = dungeon:ClaimID("blackGuy", "Content/Sprites/Entities/player.png"); -- Create an entity
+dungeon:SpawnEntity(blackGuy, 5, 3); -- Spawn the entity
+print("\n[dungeontest] spawning entity 'blackGuy'\n");
 --end
