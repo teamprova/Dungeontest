@@ -5,15 +5,6 @@ namespace DungeonTest
 {
     class Block
     {
-        public const byte CEMENT = 0;
-        public const byte CEMENT_BRICK = 1;
-
-        public static TextureData Cement;
-        public static TextureData CementBrick;
-
-        //texture for the block to use when drawn
-        public TextureData texture;
-
         // raycast engine only draws solid blocks
         public bool isSolid;
         public byte blockType = 0;
@@ -23,14 +14,6 @@ namespace DungeonTest
             isSolid = solid;
 
             blockType = block;
-            texture = Cement;
-            
-            switch (block)
-            {
-                case CEMENT_BRICK:
-                    texture = CementBrick;
-                    break;
-            }
         }
 
         // what happens when we click the block

@@ -4,8 +4,11 @@ namespace DungeonTest
     class SinglePlayer : CoreGame
     {
         public SinglePlayer()
+            : base()
         {
             Dungeon.Generate();
+
+            LoadDefaultSprites();
 
             players.Add(player);
         }
@@ -18,7 +21,6 @@ namespace DungeonTest
             loading = false;
             initializing = false;
         }
-
 
         public override Screen Update(float deltaTime)
         {
@@ -33,8 +35,7 @@ namespace DungeonTest
                     Dungeon.Generate();
                 }
 
-                player.Update(player, deltaTime);
-                Dungeon.Update(player, deltaTime);
+                Dungeon.Update();
                 UpdateEntityArray();
             }
 

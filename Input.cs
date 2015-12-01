@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DungeonTest
 {
-    public static class Input
+    public class Input
     {
         static GamePadState oldController = GamePad.GetState(PlayerIndex.One);
         static GamePadState newController = GamePad.GetState(PlayerIndex.One);

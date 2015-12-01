@@ -44,9 +44,7 @@
     <Compile Include="Level\Block.cs" />
     <Compile Include="DungeonTest.cs" />
     <Compile Include="Level\Dungeon.cs" />
-    <Compile Include="Entities\Enemy.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\Player.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InputTools\Button.cs" />
     <Compile Include="InputTools\Container.cs" />
@@ -118,9 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="mods\test.lua">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="mods\test2.lua">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="packages.config" />

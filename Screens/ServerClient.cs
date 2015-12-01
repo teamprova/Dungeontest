@@ -19,8 +19,10 @@ namespace DungeonTest
         float lastUpdate = 0;
 
         public Client(IPAddress IP)
+            : base()
         {
             Dungeon.status = "CONNECTING";
+            Dungeon.Clear();
 
             HostIP = new IPEndPoint(IP, PORT);
 
@@ -37,13 +39,6 @@ namespace DungeonTest
         public override Screen Update(float deltaTime)
         {
             lastUpdate += deltaTime;
-
-            if (!loading)
-            {
-                player.Update(player, deltaTime);
-
-                UpdateEntityArray();
-            }
 
             if (lastUpdate >= MAX_IDLE_TIME)
             {
@@ -96,6 +91,12 @@ namespace DungeonTest
                                 Dungeon.status = "GETTING PLAYER DATA";
                                 player.CopyBytes(response);
                                 break;
+                            case (byte)Protocol.SEND_SPRITE:
+                                Dungeon.status = "DOWNLOADING ASSETS";
+                                TextureData data = new TextureData(response);
+                                sprites.Add(data);
+                                spriteNames.Add("?");
+                                break;
                         }
                     }
                     catch (Exception) { }
@@ -105,24 +106,23 @@ namespace DungeonTest
 
         void UpdateEntities(byte[] response)
         {
-            List<Player> PlayerResponseList = new List<Player>();
+            List<Entity> PlayerResponseList = new List<Entity>();
             List<Entity> EntityResponseList = new List<Entity>();
 
             for (int i = 0; i < response.Length; i += Entity.BYTES)
             {
-                Entity e = new Player();
-                int type = BitConverter.ToInt32(response, i + Entity.BYTES - 4);
+                Entity e = new Entity(id, 0, 0);
+                int type = BitConverter.ToInt32(response, i);
 
                 switch (type)
                 {
-                    case 1:
+                    case 0:
                         if (i / Entity.BYTES == id)
                             PlayerResponseList.Add(player);
                         else
-                            PlayerResponseList.Add((Player)e);
+                            PlayerResponseList.Add(e);
                         break;
-                    case 2:
-                        e = new Enemy(0, 0);
+                    default:
                         EntityResponseList.Add(e);
                         break;
                 }
@@ -135,6 +135,7 @@ namespace DungeonTest
 
             Dungeon.entities = EntityResponseList;
             players = PlayerResponseList;
+            UpdateEntityArray();
         }
 
         void SendUpdates()

@@ -25,6 +25,8 @@ namespace DungeonTest
         public static string status = "";
         public static bool complete = false;
 
+        public static float deltaTime = 0;
+
         static Random rnd = new Random();
         static float roomsToMake = 0;
 
@@ -39,6 +41,20 @@ namespace DungeonTest
             generationThread = new Thread(new ThreadStart(GeneratorThread));
             generationThread.IsBackground = true;
             generationThread.Start();
+        }
+
+        static void GeneratorThread()
+        {
+            // Variables for the room
+            roomsToMake = rnd.Next(MIN_ROOMS, MAX_ROOMS); // Random room count
+            Clear();
+
+            MakeRooms();
+            SquashRooms();
+            PlaceBlocks();
+            UpdateData();
+
+            complete = true;
         }
 
         public static void Clear()
@@ -59,28 +75,6 @@ namespace DungeonTest
                 }
 
             return placedBlocks / (WIDTH * HEIGHT);
-        }
-
-        static void GeneratorThread()
-        {
-            // Variables for the room
-            roomsToMake = rnd.Next(MIN_ROOMS, MAX_ROOMS); // Random room count
-            Clear();
-
-            MakeRooms();
-            SquashRooms();
-            PlaceBlocks();
-            UpdateData();
-
-            complete = true;
-
-            Console.WriteLine("\n[dungeontest] map generation complete\n");
-
-            // load scripts
-            Console.WriteLine("\n[dungeontest] loading mods\n");
-            DungeonTest.EmbeddedResourceScriptLoader();
-            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
-
         }
 
         static void MakeRooms()
@@ -171,7 +165,7 @@ namespace DungeonTest
                 {
                     for (int y = room.Y; y < room.Y + room.Height; y++)
                     {
-                        SetBlockAt(x, y, new Block(Block.CEMENT, false));
+                        SetBlockAt(x, y, new Block(1, false));
                     }
                 }
 
@@ -183,7 +177,7 @@ namespace DungeonTest
                 for (int y = 0; y < HEIGHT; y++)
                 {
                     if (GetBlockAt(x, y) == null)
-                        SetBlockAt(x, y, new Block(Block.CEMENT_BRICK, true));
+                        SetBlockAt(x, y, new Block(2, true));
                 }
         }
 
@@ -214,7 +208,7 @@ namespace DungeonTest
                         pointB.Y++;
                 }
 
-                SetBlockAt(pointB.X, pointB.Y, new Block(Block.CEMENT, false));
+                SetBlockAt(pointB.X, pointB.Y, new Block(1, false));
             }
         }
 
@@ -300,15 +294,28 @@ namespace DungeonTest
         }
         #endregion
 
+        // Modders may find this useful
         #region Tools
-        // For modders
-        public static void SpawnGenericEntity(string src, float x, float y)
+        // used for creating sprites for blocks/entities
+        // naming is so we can tell what type of (x) this is
+        public static int ClaimID(string name, string src)
         {
-            TextureData sprite = new TextureData(src);
+            int id = CoreGame.sprites.Count;
 
-            entities.Add(new Entity(sprite, x, y, 0));
+            //add name to sprite list
+            CoreGame.spriteNames.Add(name);
 
+            //add sprite to sprite list
+            CoreGame.sprites.Add(new TextureData(src));
 
+            return id;
+        }
+
+        public static void SpawnEntity(int id, float x, float y)
+        {
+            Entity myEntity = new Entity(id, x, y);
+
+            entities.Add(myEntity);
         }
 
         public static void MoveToSpawn(Entity e)
@@ -370,11 +377,10 @@ namespace DungeonTest
         }
         #endregion
 
-        #region GameLoop
-        public static void Update(Player player, float deltaTime)
+        #region GameStuff
+        public static void Update()
         {
-            foreach (Entity e in entities)
-                e.Update(player, deltaTime);
+            // TODO: Mod entity updates here
         }
 
         public static float CastRay(Entity e, double rayAngle, out Block block, out float textureX, out Vector2 collision)

@@ -37,9 +37,12 @@ namespace DungeonTest
 
         public static float fov = 60;
 
-        protected Player player = new Player();
-        protected List<Player> players = new List<Player>();
+        protected Entity player = new Entity(0, Dungeon.spawn.X, Dungeon.spawn.Y);
+        protected List<Entity> players = new List<Entity>();
         protected Entity[] entityArray = new Entity[] { };
+
+        public static List<TextureData> sprites = new List<TextureData>();
+        public static List<string> spriteNames = new List<string>();
 
         protected bool initializing = true;
         protected bool loading = true;
@@ -49,7 +52,22 @@ namespace DungeonTest
         bool debugging = false;
         float averagefps = 0;
         List<float> fps = new List<float>();
+        public int headBob = 0;
+        double bobAngle = 0;
 
+        public CoreGame()
+        {
+            sprites.Clear();
+            spriteNames.Clear();
+        }
+
+        protected void LoadDefaultSprites()
+        {
+            Dungeon.ClaimID("Player", "Content/Sprites/Entities/player.png");
+            Dungeon.ClaimID("Cement", "Content/Sprites/Blocks/cement.png");
+            Dungeon.ClaimID("CementBricks", "Content/Sprites/Blocks/brick.png");
+        }
+        
         public override Screen Update(float deltaTime)
         {
             GetFPS(deltaTime);
@@ -62,7 +80,39 @@ namespace DungeonTest
             if (Input.Tapped(Keys.F3))
                 debugging = !debugging;
 
+            if(!loading)
+                ControlPlayer();
+
             return this;
+        }
+
+        // TODO : Move to a lua script
+        void ControlPlayer()
+        {
+            player.angle += Input.deltaMouse.X * Dungeon.deltaTime / 4;
+            player.angle %= Math.PI * 2;
+
+            float forwardSpeed = Input.movement.Y * Dungeon.deltaTime * 4;
+            float sideSpeed = Input.movement.X * Dungeon.deltaTime * 4;
+
+            player.vel.X += (float)Math.Cos(player.angle) * -forwardSpeed;
+            player.vel.Y += (float)Math.Sin(player.angle) * -forwardSpeed;
+
+            player.vel.X += (float)Math.Cos(player.angle + Math.PI / 2) * sideSpeed;
+            player.vel.Y += (float)Math.Sin(player.angle + Math.PI / 2) * sideSpeed;
+
+
+            if (!Dungeon.IsBlocking(player.pos + player.vel))
+            {
+                player.pos += player.vel;
+
+                bobAngle += 5 * player.vel.Length();
+                bobAngle %= Math.PI * 2;
+
+                headBob = (int)(Math.Sin(bobAngle) * 4);
+            }
+
+            player.vel = Vector2.Zero;
         }
 
         protected void UpdateEntityArray()
@@ -155,15 +205,11 @@ namespace DungeonTest
             spriteBatch.End();
         }
 
-        public void DrawEntities()
+        void DrawEntities()
         {
-            int currentID = 0;
-
-            foreach (Entity e in players.Concat(Dungeon.entities))
-            {
-                if(currentID++ != id)
-                    e.Draw(ctx, player);
-            }
+            for(int i = 0; i < entityArray.Length; i++)
+                if(i != id)
+                    entityArray[i].Draw(ctx, player, headBob);
         }
 
         public void RayCast()
@@ -176,7 +222,7 @@ namespace DungeonTest
 
                 //add the player's angle for camera rotation
                 rayAngle += player.angle;
-                int bob = MAKE_ME_FEEL_TALLER + player.headBob;
+                int bob = MAKE_ME_FEEL_TALLER + headBob;
 
                 Block block;
                 float textureX;
@@ -209,10 +255,12 @@ namespace DungeonTest
                 if (block == null)
                     continue;
 
-                int pixelY = i * block.texture.height / height;
-                int pixelX = (int)(textureX * block.texture.width);
+                TextureData sprite = sprites[block.blockType];
 
-                Color pixel = block.texture.GetPixel(pixelX, pixelY);
+                int pixelY = i * sprite.height / height;
+                int pixelX = (int)(textureX * sprite.width);
+
+                Color pixel = sprite.GetPixel(pixelX, pixelY);
 
                 if (collision.X % 1 == 0)
                 {
@@ -266,6 +314,7 @@ namespace DungeonTest
                         pixel = roofTextureData.GetPixel(spriteX, spriteY);
                         TextureData.Darken(ref pixel, brightness);
                     }
+
                     ctx.SetPixel(x, y, pixel);
                     ctx.SetZIndex(x, y, slopeIntercept);
                 }
@@ -281,7 +330,7 @@ namespace DungeonTest
             {
                 if (ctx.GetPixel(x, y) == Color.Transparent)
                 {
-                    float slope = y - GAME_HEIGHT / 2 - MAKE_ME_FEEL_TALLER - player.headBob;
+                    float slope = y - GAME_HEIGHT / 2 - MAKE_ME_FEEL_TALLER - headBob;
                     Color pixel = Color.Black;
                     float slopeIntercept = float.MaxValue;
 
@@ -313,10 +362,12 @@ namespace DungeonTest
                             texturePos.X %= 1;
                             texturePos.Y %= 1;
 
-                            int spriteX = (int)(texturePos.X * block.texture.width);
-                            int spriteY = (int)(texturePos.Y * block.texture.height);
+                            TextureData sprite = sprites[block.blockType];
 
-                            pixel = block.texture.GetPixel(spriteX, spriteY);
+                            int spriteX = (int)(texturePos.X * sprite.width);
+                            int spriteY = (int)(texturePos.Y * sprite.height);
+
+                            pixel = sprite.GetPixel(spriteX, spriteY);
                             TextureData.Darken(ref pixel, brightness);
                         }
                     }

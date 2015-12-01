@@ -6,26 +6,21 @@ namespace DungeonTest
 {
     class Entity
     {
+        const float SPEED = 4;
         public Vector2 pos = Vector2.Zero;
         public Vector2 vel = Vector2.Zero;
         public double angle = 0;
-        public int type = 0;
+        public int id = 0;
         public float luminosity = 1;
+        public float idleTime = 0;
 
-        public TextureData spriteData;
-
-        public Entity(TextureData sprite, float x, float y, int id)
+        public Entity(int ID, float x, float y)
         {
             pos = new Vector2(x, y);
-
-            type = id;
-
-            spriteData = sprite;
+            id = ID;
         }
 
-        public virtual void Update(Player player, float deltaTime){}
-
-        public virtual void AI(int action, Player player, float speed, float deltaTime)
+        public virtual void AI(int action, Entity player, float speed, float deltaTime)
         {
             // Create a movement Vector2
             Vector2 movement = vel * deltaTime;
@@ -33,7 +28,6 @@ namespace DungeonTest
             // Find the direction of the player
             Vector2 direction = player.pos - pos;
             direction.Normalize();
-
 
             // Detect what kind of AI we are shooting for
             if (action == 0) // Chasing an entity
@@ -71,29 +65,32 @@ namespace DungeonTest
             }
         }
 
-        public virtual void Draw(TextureData ctx, Player player)
+        public virtual void Draw(TextureData ctx, Entity player, int headBob)
         {
-            if (spriteData == null)
+            // sprite doesnt exist for this entity
+            if (CoreGame.sprites.Count < id)
                 return;
 
+            TextureData spriteData = CoreGame.sprites[id];
+
             // Translate position to viewer space
-            Vector2 dist = Vector2.Zero;
-            dist.X = pos.X - player.pos.X;
-            dist.Y = pos.Y - player.pos.Y;
+            Vector2 dist = pos - player.pos;
+
+            float distance = dist.Length();
 
             // Sprite angle relative to viewing angle
             double spriteAngle = Math.Atan2(dist.Y, dist.X) - player.angle;
 
             // Size of the sprite
-            int size = (int)(CoreGame.GetViewDist() / (Math.Cos(spriteAngle) * dist.Length()));
+            int size = (int)(CoreGame.GetViewDist() / (Math.Cos(spriteAngle) * distance));
 
             // X-position on screen
             float left = (float)(Math.Tan(spriteAngle) * CoreGame.GetViewDist());
             left = (CoreGame.GAME_WIDTH / 2 + left - size / 2);
 
-            float top = (CoreGame.GAME_HEIGHT - size) / 2 + player.headBob;
+            float top = (CoreGame.GAME_HEIGHT - size) / 2 + headBob;
 
-            float zIndex = dist.Length();
+            float zIndex = distance;
 
             for(int x = (left < 0) ? (int)-left : 0; x < size; x++)
             {
@@ -116,30 +113,27 @@ namespace DungeonTest
             }
         }
 
+        // Multiplayer stuff
         public const int BYTES = 20;
 
         public byte[] GetSendableFormat()
         {
             byte[] data = new byte[BYTES];
 
-            BitConverter.GetBytes(pos.X).CopyTo(data, 0);
-            BitConverter.GetBytes(pos.Y).CopyTo(data, 4);
+            BitConverter.GetBytes(id).CopyTo(data, 0);
 
-            BitConverter.GetBytes(vel.X).CopyTo(data, 8);
-            BitConverter.GetBytes(vel.Y).CopyTo(data, 12);
-
-            BitConverter.GetBytes(type).CopyTo(data, 16);
+            BitConverter.GetBytes(pos.X).CopyTo(data, 4);
+            BitConverter.GetBytes(pos.Y).CopyTo(data, 8);
 
             return data;
         }
 
         public void CopyBytes(byte[] response)
         {
-            pos.X = BitConverter.ToSingle(response, 0);
-            pos.Y = BitConverter.ToSingle(response, 4);
+            id = BitConverter.ToInt32(response, 0);
 
-            vel.X = BitConverter.ToSingle(response, 8);
-            vel.Y = BitConverter.ToSingle(response, 12);
+            pos.X = BitConverter.ToSingle(response, 4);
+            pos.Y = BitConverter.ToSingle(response, 8);
         }
     }
 }

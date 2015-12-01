@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace DungeonTest
 {
-    public enum Protocol : byte { UPDATE_ID, UPDATE_PLAYER, MAP_CHANGE, UPDATE_ENTITY_DATA }
+    public enum Protocol : byte { UPDATE_ID, UPDATE_PLAYER, MAP_CHANGE, UPDATE_ENTITY_DATA, SEND_SPRITE }
 
     class ServerHost : CoreGame
     {
@@ -25,8 +25,11 @@ namespace DungeonTest
         byte[] entityData = new byte[] { };
 
         public ServerHost()
+            : base()
         {
             Dungeon.Generate();
+
+            LoadDefaultSprites();
 
             players.Add(player);
         }
@@ -34,7 +37,7 @@ namespace DungeonTest
         void FinishInitialization()
         {
             int currentClient = 0;
-            foreach (Player p in players)
+            foreach (Entity p in players)
             {
                 Dungeon.MoveToSpawn(p);
 
@@ -73,8 +76,7 @@ namespace DungeonTest
                     Dungeon.Generate();
                 }
 
-                player.Update(player, deltaTime);
-                Dungeon.Update(player, deltaTime);
+                Dungeon.Update();
                 KickIdlePlayers(deltaTime);
 
                 UpdateEntityArray();
@@ -90,7 +92,7 @@ namespace DungeonTest
         void KickIdlePlayers(float deltaTime)
         {
             int clientID = 0;
-            List<Player> tempPlayers = new List<Player>();
+            List<Entity> tempPlayers = new List<Entity>();
             List<IPEndPoint> tempClients = new List<IPEndPoint>();
 
             tempPlayers.Add(player);
@@ -98,12 +100,12 @@ namespace DungeonTest
             //loop through players
             foreach (IPEndPoint client in Clients)
             {
-                Player clientEntity = players[++clientID];
+                Entity clientEntity = players[++clientID];
 
                 // add time to idle time
-                clientEntity.IdleTime += deltaTime;
+                clientEntity.idleTime += deltaTime;
 
-                if (clientEntity.IdleTime < MAX_IDLE_TIME)
+                if (clientEntity.idleTime < MAX_IDLE_TIME)
                 {// add if player isn't idle
                     tempPlayers.Add(clientEntity);
                     tempClients.Add(client);
@@ -153,7 +155,6 @@ namespace DungeonTest
                             if (players.Count < 4)
                             {//if players arent greater than 4 then connect
                                 //connect client
-                                Clients.Add(ConnectingIP);
                                 ConnectClient(players.Count);
                             }//... otherwise ignore
                         }
@@ -168,11 +169,11 @@ namespace DungeonTest
                                 if (Clients[ID - 1].Equals(ConnectingIP))
                                 {
                                     //update clients entity
-                                    Player clientPlayer = players[ID];
+                                    Entity clientPlayer = players[ID];
                                     clientPlayer.CopyBytes(response);
 
                                     //reset idle time
-                                    clientPlayer.IdleTime = 0;
+                                    clientPlayer.idleTime = 0;
                                 }
                             }
                             else
@@ -204,7 +205,8 @@ namespace DungeonTest
             Entity duplicateEntity = GrabEntity(AssignedID);
 
             // create a player entity for the client
-            Player clientEntity = new Player();
+            Entity clientEntity = new Entity(0, Dungeon.spawn.X, Dungeon.spawn.Y);
+            Clients.Add(ConnectingIP);
             players.Add(clientEntity);
 
             // send data to client
@@ -213,11 +215,31 @@ namespace DungeonTest
             // send the entity data
             SendPlayerData(clientEntity, ConnectingIP);
 
+            for(int id = 0; id < sprites.Count; id++)
+                SendSprite(sprites[id], ConnectingIP);
+
             // send dungeon data
             NewConnections.Send(Dungeon.mapData, Dungeon.mapData.Length, ConnectingIP);
         }
 
-        void SendPlayerData(Player clientEntity, IPEndPoint IP)
+        void SendSprite(TextureData sprite, IPEndPoint IP)
+        {
+            //sprite data
+            byte[] spriteData = sprite.GetBytes();
+
+            // protocol size + sprite size
+            byte[] message = new byte[1 + spriteData.Length];
+
+            //protocol
+            message[0] = (byte)Protocol.SEND_SPRITE;
+            // data
+            spriteData.CopyTo(message, 1);
+
+            //send data
+            NewConnections.Send(message, message.Length, IP);
+        }
+
+        void SendPlayerData(Entity clientEntity, IPEndPoint IP)
         {
             // protocol size + entity data size
             byte[] message = new byte[1 + Entity.BYTES];
