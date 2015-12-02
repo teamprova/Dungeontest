@@ -57,7 +57,7 @@ namespace DungeonTest
         public static void LoadMods()
         {
             // Set script loader
-            Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
+            //Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
             //Register classes
             UserData.RegisterType<API>();
