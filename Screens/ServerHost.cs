@@ -125,10 +125,10 @@ namespace DungeonTest
 
             UdpClient newClient = new UdpClient();
             newClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
+            /*
             byte[] inValue = new byte[] { 0 };
             byte[] outValue = new byte[] { 0 };
-            newClient.Client.IOControl(SIO_UDP_CONNRESET, inValue, outValue);
+            newClient.Client.IOControl(SIO_UDP_CONNRESET, inValue, outValue);*/
             newClient.Client.Bind(EndPoint);
             newClient.Client.ReceiveTimeout = 1;
 

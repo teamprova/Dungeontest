@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DungeonTest
 {
-    class TextureData
+    public class TextureData
     {
         public int width = 1;
         public int height = 1;

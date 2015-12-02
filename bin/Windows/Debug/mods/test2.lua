@@ -1,3 +1,3 @@
 ﻿-- Another test
 
-print "\n I am another mod printing to the console";
+print "\n I am complete ass";

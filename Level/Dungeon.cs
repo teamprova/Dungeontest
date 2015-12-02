@@ -13,8 +13,8 @@ namespace DungeonTest
         const double TAU = Math.PI * 2;
         public static int MIN_ROOM_SIZE = 8;
         public static int MAX_ROOM_SIZE = 15;
-        public static int MIN_ROOMS = 25;
-        public static int MAX_ROOMS = 50;
+        public static int MIN_ROOMS = 15;
+        public static int MAX_ROOMS = 20;
 
         public static List<Entity> entities = new List<Entity>();
         public static Block[,] map = new Block[HEIGHT, WIDTH];
@@ -369,7 +369,12 @@ namespace DungeonTest
         public static void Update()
         {
             // TODO: Mod entity updates here
-            ModHandler.RunEvent("Update");
+            ModHandler.RunEvent("ServerUpdate", deltaTime);
+
+            foreach (Entity e in entities)
+            {
+                ModHandler.RunEvent("EntityUpdate", e);
+            }
         }
 
         public static float CastRay(Entity e, double rayAngle, out Block block, out float textureX, out Vector2 collision)

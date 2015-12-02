@@ -24,7 +24,7 @@ namespace DungeonTest
         // Test Stuff
         const int MAKE_ME_FEEL_TALLER = 0;
 
-        const float MIN_BRIGHTNESS = .2f;
+        const float MIN_BRIGHTNESS = .05f;
 
         public static TextureData roofTextureData;
 
@@ -157,17 +157,24 @@ namespace DungeonTest
 
         protected void GetFPS(float deltaTime)
         {
-            if(deltaTime != 0)
+            if (deltaTime != 0)
+            {
                 fps.Add(1 / deltaTime);
 
-            averagefps = 0;
+                //delete the first frame rate tracked if count is too high
+                if (fps.Count > 5)
+                    fps.RemoveAt(0);
 
-            foreach (float frames in fps)
-            {
-                averagefps += frames;
+
+                averagefps = 0;
+
+                foreach (float frames in fps)
+                {
+                    averagefps += frames;
+                }
+
+                averagefps = (int)(averagefps / fps.Count);
             }
-
-            averagefps = (int)(averagefps / fps.Count);
         }
 
         void DrawStringRight(SpriteBatch spriteBatch, string text, float x, float y)
@@ -402,30 +409,23 @@ namespace DungeonTest
 
         float GetBrightness(float x, float y)
         {
-            float brightness = MIN_BRIGHTNESS;
+            float brightness = 0;
             Vector2 coords = new Vector2(x, y);
 
             foreach (Entity e in entityArray)
             {
-                if (e.luminosity == 0)
+                if (e.luminosity == 0 || e.luminosity < brightness)
                     continue;
 
-                Vector2 vectDist = coords - e.pos;
-                float distance = vectDist.Length();
+                float distance = Vector2.DistanceSquared(coords, e.pos) + 1;
 
-                float lightFromEntity = e.luminosity;
-
-                if (distance != 0)
-                    lightFromEntity /= distance;
-
-                // current brightness is the brightest
-                brightness = Math.Max(brightness, lightFromEntity);
+                brightness += e.luminosity / distance;
 
                 if (brightness >= 1)
                     return 1;
             }
 
-            return brightness;
+            return Math.Max(brightness, MIN_BRIGHTNESS);
         }
     }
 }

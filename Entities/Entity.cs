@@ -4,14 +4,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace DungeonTest
 {
-    class Entity
+    public class Entity
     {
         const float SPEED = 4;
         public Vector2 pos = Vector2.Zero;
         public Vector2 vel = Vector2.Zero;
         public double angle = 0;
         public int id = 0;
-        public float luminosity = 1;
+        public float luminosity = 1f;
         public float idleTime = 0;
 
         public Entity(int ID, float x, float y)
@@ -20,7 +20,12 @@ namespace DungeonTest
             id = ID;
         }
 
-        public virtual void AI(int action, Entity player, float speed, float deltaTime)
+        public void MoveTo(float x, float y)
+        {
+            pos = new Vector2(x, y);
+        }
+
+        public void AI(int action, Entity player, float speed, float deltaTime)
         {
             // Create a movement Vector2
             Vector2 movement = vel * deltaTime;

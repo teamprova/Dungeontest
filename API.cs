@@ -3,6 +3,8 @@ using System.IO;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Loaders;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace DungeonTest
 {
@@ -27,7 +29,6 @@ namespace DungeonTest
             }
 
             return id;
-
         }
 
         public static void SpawnEntity(int id, float x, float y)
@@ -63,6 +64,9 @@ namespace DungeonTest
             UserData.RegisterType<API>();
             UserData.RegisterType<Input>();
             UserData.RegisterType<Block>();
+            UserData.RegisterType<Entity>();
+            UserData.RegisterType<Keys>();
+            UserData.RegisterType<Vector2>();
 
             // Script Loader Base
             //((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
@@ -81,6 +85,8 @@ namespace DungeonTest
                     script.Globals.Set("API", api);
                     DynValue input = UserData.Create(new Input());
                     script.Globals.Set("Input", input);
+                    DynValue keys = UserData.Create(new Keys());
+                    script.Globals.Set("Keys", keys);
 
                     // Load the file
                     script.DoFile(file);
@@ -105,12 +111,14 @@ namespace DungeonTest
             throw new ScriptRuntimeException("\n[dungeontest] fatal error occured!\n");
         }
 
-        // implemented methods:
+        // implemented events:
         //
-        // PreGenerate - claim sprite IDs here
-        // Update - runs on server
+        // PreGenerate() - runs before dungeon is generated
+        // PostGenerate() - runs after dungeon is generated
+        // ServerUpdate(float deltaTime) - runs every time the server updates
+        // EntityUpdate(Entity entity)
 
-        public static void RunEvent(string methodName)
+        public static void RunEvent(string methodName, params object[] args)
         {
             try
             {
@@ -121,7 +129,7 @@ namespace DungeonTest
 
                     //method exists then call it
                     if (method != null)
-                        mod.Call(method);
+                        mod.Call(method, args);
                 }
             }
             catch (Exception e)

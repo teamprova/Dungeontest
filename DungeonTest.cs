@@ -48,7 +48,6 @@ namespace DungeonTest
             Console.WriteLine("\n[dungeontest] loading mods\n");
             ModHandler.LoadMods();
             Console.WriteLine("\n[dungeontest] mods have been loaded\n");
-
         }
 
         protected override void UnloadContent()
