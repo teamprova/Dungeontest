@@ -73,7 +73,7 @@ namespace DungeonTest
         public virtual void Draw(TextureData ctx, Entity player, int headBob)
         {
             // sprite doesnt exist for this entity
-            if (CoreGame.sprites.Count < id)
+            if (CoreGame.sprites.Count <= id)
                 return;
 
             TextureData spriteData = CoreGame.sprites[id];

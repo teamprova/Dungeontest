@@ -2,14 +2,15 @@
 
 testEntityID = 0;
 
---if input:Held(Keys.K) then
+--if Input:Held(Keys.K) then
 function PostGenerate()
 	testEntityID = API:ClaimID("test", "Content/Sprites/Entities/player.png"); -- Create an entity
 
-	--spawn entity ten times
-	for i = 1, 10 do
-		SpawnEntity()
+	--[[spawn entity ten times
+	for i = 1, 40 do
+		SpawnEntity();
 	end
+	--]]
 end
 
 function SpawnEntity()

@@ -52,3 +52,4 @@ C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Debug\MonoGame.Framework
 C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Debug\OpenTK.dll
 C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Debug\Tao.Sdl.dll
 C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\obj\x86\Debug\DungeonCrawler.csprojResolveAssemblyReference.cache
+C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Debug\mods\BasicMovement.lua
