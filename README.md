@@ -2,9 +2,16 @@
 This is a test about retro-styled games. We have no clue what this game will be about, but currently we are developing the engine, and then having a Lua content side, so we can make game content, while allowing modders to use it.
 
 # Compiling and Running
+###### Windows
 Load up the Visual Studio project, build and run, and you should be good to go. The application should export to the bin/ folder.
 
-Further instruction on compiling will be given in a later version of this README.
+###### Ubuntu
+Install Mono, and SDL, by running "sudo apt-get install libsdl1.2-dev libsdl1.2debian mono-devel mono-complete libsdl-mixer1.2 build-essential"
+
+That will make it possible to run the .exe with Ubuntu. Also, make sure to have installed MonoDevelop, and installed MonoGame on it, if you want to modify the engine.
+
+###### Disclaimer
+Further instruction on compiling will be given in a later version of this README. And with detailed answers to why it sometimes does not work with Linux, and how to solve it.
 
 # Tech
 The tech behind Dungeontest
