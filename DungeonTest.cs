@@ -45,9 +45,7 @@ namespace DungeonTest
             CoreGame.roofTextureData = new TextureData("Content/Sprites/roof.png");
 
             // Load mods
-            Console.WriteLine("\n[dungeontest] loading mods\n");
             ModHandler.LoadMods();
-            Console.WriteLine("\n[dungeontest] mods have been loaded\n");
         }
 
         protected override void UnloadContent()
@@ -57,46 +55,38 @@ namespace DungeonTest
 
         protected override void Update(GameTime gameTime)
         {
+            // Exiting game
+            if (currentScreen.RequestExit)
+                Exit();
+
             if (IsActive)
-            {
+            {// Window has focus
+                // Update input
                 Input.Update(Window.ClientBounds);
+
+                // Hide the mouse if it is locked to the center
+                IsMouseVisible = !Input.lockMouse;
             }
 
-            IsMouseVisible = !Input.lockMouse;
-
             if (Input.Tapped(Keys.F11))
-            {
+            {// Pressed F11
+                // Fullscreen game
                 graphics.IsFullScreen = !graphics.IsFullScreen;
                 graphics.ApplyChanges();
             }
+            
+            // Get the deltaTime
+            Dungeon.deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (currentScreen.RequestExit)
-                LeaveGame();
-
-            GetDeltaTime(gameTime);
-
-            Dungeon.deltaTime = GetDeltaTime(gameTime);
-
+            // Update the screen
             currentScreen = currentScreen.Update(Dungeon.deltaTime);
 
             base.Update(gameTime);
         }
 
-        float GetDeltaTime(GameTime gameTime)
-        {
-            float elapsedMilliseconds = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            return elapsedMilliseconds / 1000f;
-        }
-
-        void LeaveGame()
-        {
-            try {
-                Exit();
-            } catch (Exception) { }
-        }
-
         protected override void Draw(GameTime gameTime)
         {
+            // Draw the current screen
             currentScreen.Draw(GraphicsDevice, spriteBatch);
 
             base.Draw(gameTime);

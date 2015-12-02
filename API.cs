@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using MoonSharp.Interpreter;
-using MoonSharp.Interpreter.Loaders;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -10,6 +9,12 @@ namespace DungeonTest
 {
     public class API
     {
+        /// <summary>
+        /// Claims a location in the game's sprite list
+        /// </summary>
+        /// <param name="name">Name of the sprite</param>
+        /// <param name="src">File location</param>
+        /// <returns>The sprite's ID</returns>
         public static int ClaimID(string name, string src)
         {
             int id = CoreGame.sprites.Count;
@@ -31,6 +36,13 @@ namespace DungeonTest
             return id;
         }
 
+        /// <summary>
+        /// Spawns an an entity at (x, y)
+        /// </summary>
+        /// <param name="id">The ID of the sprite to use</param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static void SpawnEntity(int id, float x, float y)
         {
             Entity myEntity = new Entity(id, x, y);
@@ -43,6 +55,12 @@ namespace DungeonTest
             }
         }
 
+        /// <summary>
+        /// Checks if the block is a wall
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static object GetBlock(int x, int y)
         {
             return Dungeon.GetBlockAt(x, y);
@@ -51,16 +69,20 @@ namespace DungeonTest
 
     public class ModHandler
     {
+        const string MODS_FOLDER = "mods/";
+
         public static List<Script> mods = new List<Script>();
 
-
-        // Mod API stuff
+        /// <summary>
+        /// Load the mods in the mods folder
+        /// </summary>
         public static void LoadMods()
         {
+            Console.WriteLine("\n[dungeontest] loading mods\n");
             // Set script loader
             //Script.DefaultOptions.ScriptLoader = new EmbeddedResourcesScriptLoader();
 
-            //Register classes
+            // Register classes
             UserData.RegisterType<API>();
             UserData.RegisterType<Input>();
             UserData.RegisterType<Block>();
@@ -68,24 +90,24 @@ namespace DungeonTest
             UserData.RegisterType<Keys>();
             UserData.RegisterType<Vector2>();
 
+            // Load static classes
+            DynValue api = UserData.Create(new API());
+            DynValue input = UserData.Create(new Input());
+            DynValue keys = UserData.Create(new Keys());
+
             // Script Loader Base
             //((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
             //((ScriptLoaderBase)script.Options.ScriptLoader).IgnoreLuaPathGlobal = true;
 
-            // Load mods
-            string folderPath = "mods/";
-
-            foreach (string file in Directory.EnumerateFiles(folderPath, "*.lua"))
+            foreach (string file in Directory.EnumerateFiles(MODS_FOLDER, "*.lua"))
             {
                 Console.Write("\n[dungeontest] initializing mod '{0}'\n", file);
+
                 try
                 {
                     Script script = new Script();
-                    DynValue api = UserData.Create(new API());
                     script.Globals.Set("API", api);
-                    DynValue input = UserData.Create(new Input());
                     script.Globals.Set("Input", input);
-                    DynValue keys = UserData.Create(new Keys());
                     script.Globals.Set("Keys", keys);
 
                     // Load the file
@@ -95,46 +117,56 @@ namespace DungeonTest
 
                     // Log completion
                     Console.WriteLine("\n[dungeontest] mod '{0}' loaded!\n", file);
-
                 }
                 catch (Exception ex)
                 {
+                    // Alerting the issue loading a mod
                     Console.WriteLine("\n[dungeontest] error occured in loading '{0}' mod: {1}\n", file, ex.Message);
                     Console.WriteLine("\n[dungeontest] could not load '{0}' mod!\n", file);
                 }
+
+                // Print how many mods were loaded
+                Console.WriteLine("\n[dungeontest] {0} mods have been loaded\n", mods.Count);
             }
         }
 
         // API Error Handling (this does nothing currently)
-        static void DoError()
+        private static void DoError()
         {
             throw new ScriptRuntimeException("\n[dungeontest] fatal error occured!\n");
         }
 
         // implemented events:
         //
-        // PreGenerate() - runs before dungeon is generated
-        // PostGenerate() - runs after dungeon is generated
-        // ServerUpdate(float deltaTime) - runs every time the server updates
-        // EntityUpdate(Entity entity)
+        // PreGenerate() - Runs before dungeon is generated
+        // PostGenerate() - Runs after dungeon is generated
+        // ServerUpdate(float deltaTime) - Runs every time the server updates
+        // EntityUpdate(Entity entity) - Runs when the entity needs an update
 
-        public static void RunEvent(string methodName, params object[] args)
+        /// <summary>
+        /// Runs event handler on every mod
+        /// </summary>
+        /// <param name="eventName">The event to handle</param>
+        /// <param name="args">Parameters for the event</param>
+        public static void HandleEvent(string eventName, params object[] args)
         {
             try
             {
-                //run the event on every mod
+                // Run the handler for the event on every mod
                 foreach (Script mod in mods)
                 {
-                    object method = mod.Globals[methodName];
+                    // Get the method
+                    object method = mod.Globals[eventName];
 
-                    //method exists then call it
+                    // See if it exists then call it
                     if (method != null)
                         mod.Call(method, args);
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("\n[dungeontest] method call error: " + e.Message + "\n");
+                // Error warning
+                Console.WriteLine("\n[dungeontest] \"" + eventName + "\" event error: " + e.Message + "\n");
             }
         }
     }

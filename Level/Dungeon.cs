@@ -41,7 +41,7 @@ namespace DungeonTest
 
             Console.WriteLine("\n[dungeontest] starting map generation\n");
 
-            ModHandler.RunEvent("PreGenerate");
+            ModHandler.HandleEvent("PreGenerate");
 
             generationThread = new Thread(new ThreadStart(GeneratorThread));
             generationThread.IsBackground = true;
@@ -60,7 +60,7 @@ namespace DungeonTest
 
             complete = true;
 
-            ModHandler.RunEvent("PostGenerate");
+            ModHandler.HandleEvent("PostGenerate");
 
             Console.WriteLine("\n[dungeontest] map generation complete\n");
         }
@@ -305,14 +305,24 @@ namespace DungeonTest
 
         // Modders may find this useful
         #region Tools
-
+        
+        /// <summary>
+        /// Move the entity to the dungeon's spawn location
+        /// </summary>
+        /// <param name="e"></param>
         public static void MoveToSpawn(Entity e)
         {
             e.pos.X = spawn.X;
             e.pos.Y = spawn.Y;
         }
-
-        // For when all you want is to find the nearest block and measure the dist
+        
+        /// <summary>
+        /// For when all you want is to find the nearest block and measure the distance
+        /// </summary>
+        /// <param name="e">Entity to cast the ray from</param>
+        /// <param name="rayAngle">Angle of the ray</param>
+        /// <param name="collision">Where the ray hit</param>
+        /// <returns></returns>
         public static float CastRay(Entity e, double rayAngle, out Vector2 collision)
         {
             float textureX;
@@ -321,11 +331,23 @@ namespace DungeonTest
             return CastRay(e, rayAngle, out block, out textureX, out collision);
         }
 
+        /// <summary>
+        /// Checks if the block is a wall
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static bool IsBlocking(Vector2 pos)
         {
             return IsBlocking(pos.X, pos.Y);
         }
 
+        /// <summary>
+        /// Checks if the block is a wall
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static bool IsBlocking(double x, double y)
         {// non air block in this location
             Block block = GetBlockAt(x, y);
@@ -336,29 +358,59 @@ namespace DungeonTest
             return block.solid;
         }
 
+        /// <summary>
+        /// Gets the block at these coordinates
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static Block GetBlockAt(int x, int y)
         {
             if (IsWithin(x, y))
                 return map[y, x];
             return null;
         }
-
+        
+        /// <summary>
+        /// Gets the block at these coordinates
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static Block GetBlockAt(double x, double y)
         {
             return GetBlockAt((int)x, (int)y);
         }
 
+        /// <summary>
+        /// Sets the block at these coordinates
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static void SetBlockAt(int x, int y, Block block)
         {
             if (IsWithin(x, y))
                 map[y, x] = block;
         }
 
+        /// <summary>
+        /// Checks the coordinates to see if they're within the dungeon
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static bool IsWithin(int x, int y)
         {
             return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
         }
 
+        /// <summary>
+        /// Checks the coordinates to see if they're within the dungeon
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static bool IsWithin(double x, double y)
         {
             return IsWithin((int)x, (int)y);
@@ -366,14 +418,17 @@ namespace DungeonTest
         #endregion
 
         #region GameStuff
+        /// <summary>
+        /// Sends updates to mods to update the entities in the dungeon
+        /// </summary>
         public static void Update()
         {
             // TODO: Mod entity updates here
-            ModHandler.RunEvent("ServerUpdate", deltaTime);
+            ModHandler.HandleEvent("ServerUpdate", deltaTime);
 
             foreach (Entity e in entities)
             {
-                ModHandler.RunEvent("EntityUpdate", e);
+                ModHandler.HandleEvent("EntityUpdate", e);
             }
         }
 

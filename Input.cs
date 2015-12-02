@@ -19,39 +19,10 @@ namespace DungeonTest
         public static bool lockMouse = false;
         public static bool leftClick = false;
 
-        public static bool Held(Keys key)
-        {
-            return newKeyboard.IsKeyDown(key);
-        }
-
-        public static bool Tapped(Keys key)
-        {
-            return newKeyboard.IsKeyDown(key) && oldKeyboard.IsKeyUp(key);
-        }
-
-        public static bool Held(Buttons button)
-        {
-            if (button == Buttons.LeftTrigger || button == Buttons.RightTrigger)
-                return TriggerDown(newController, button);
-
-            return newController.IsButtonDown(button);
-        }
-
-        public static bool Tapped(Buttons button)
-        {
-            if (button == Buttons.LeftTrigger || button == Buttons.RightTrigger)
-                return TriggerDown(newController, button) && !TriggerDown(oldController, button);
-
-            return newController.IsButtonDown(button) && oldController.IsButtonUp(button);
-        }
-
-        static bool TriggerDown(GamePadState controller, Buttons button)
-        {
-            float trigger = (button == Buttons.LeftTrigger) ? controller.Triggers.Left : controller.Triggers.Right;
-
-            return trigger > .8f;
-        }
-
+        /// <summary>
+        /// Updates input
+        /// </summary>
+        /// <param name="window">The bounds of the window</param>
         public static void Update(Rectangle window)
         {
             movement = Vector2.Zero;
@@ -62,6 +33,78 @@ namespace DungeonTest
             UpdateKeyboard();
             UpdateMouse(window);
             UpdateController();
+        }
+
+        /// <summary>
+        /// Checks if the key was tapped.
+        /// </summary>
+        /// <param name="key">The key to check</param>
+        /// <returns></returns>
+        public static bool Held(Keys key)
+        {
+            return newKeyboard.IsKeyDown(key);
+        }
+
+        /// <summary>
+        /// Checks if the key is being held.
+        /// </summary>
+        /// <param name="key">The key to check</param>
+        /// <returns></returns>
+        public static bool Tapped(Keys key)
+        {
+            return newKeyboard.IsKeyDown(key) && oldKeyboard.IsKeyUp(key);
+        }
+
+        /// <summary>
+        /// Checks if the button is being held on the controller.
+        /// </summary>
+        /// <param name="button">The button to check</param>
+        /// <returns></returns>
+        public static bool Held(Buttons button)
+        {
+            if (button == Buttons.LeftTrigger || button == Buttons.RightTrigger)
+                return TriggerDown(newController, button);
+
+            return newController.IsButtonDown(button);
+        }
+
+        /// <summary>
+        /// Checks if the controller button was tapped.
+        /// </summary>
+        /// <param name="button">The button to check</param>
+        /// <returns></returns>
+        public static bool Tapped(Buttons button)
+        {
+            if (button == Buttons.LeftTrigger || button == Buttons.RightTrigger)
+                return TriggerDown(newController, button) && !TriggerDown(oldController, button);
+
+            return newController.IsButtonDown(button) && oldController.IsButtonUp(button);
+        }
+
+        private static bool TriggerDown(GamePadState controller, Buttons button)
+        {
+            float trigger = (button == Buttons.LeftTrigger) ? controller.Triggers.Left : controller.Triggers.Right;
+
+            return trigger > .8f;
+        }
+
+        /// <summary>
+        /// Gets all of the keys being pressed on the keyboard
+        /// </summary>
+        /// <returns>An array of Keys</returns>
+        public static Keys[] GetPressedKeys()
+        {
+            return newKeyboard.GetPressedKeys();
+        }
+
+        private static void SetMouse(int x, int y)
+        {
+            try
+            {
+                // move the mouse to the pos
+                Mouse.SetPosition(x, y);
+            }
+            catch (Exception) { }
         }
 
         private static void UpdateController()
@@ -83,7 +126,7 @@ namespace DungeonTest
             leftClick |= Held(Buttons.LeftTrigger);
         }
 
-        public static void UpdateMouse(Rectangle window)
+        private static void UpdateMouse(Rectangle window)
         {
             oldMouse = newMouse;
             newMouse = Mouse.GetState();
@@ -99,21 +142,12 @@ namespace DungeonTest
 
             leftClick = newMouse.LeftButton == ButtonState.Pressed;
 
+            // Center the mouse if it is locked
             if (lockMouse)
                 SetMouse(window.Center.X, window.Center.Y);
         }
 
-        static void SetMouse(int x, int y)
-        {
-            try
-            {
-                Mouse.SetPosition(x, y);
-            }
-            catch (Exception)
-            { }
-        }
-
-        public static void UpdateKeyboard()
+        private static void UpdateKeyboard()
         {
             oldKeyboard = newKeyboard;
             newKeyboard = Keyboard.GetState();
@@ -129,11 +163,6 @@ namespace DungeonTest
 
             if(movement != Vector2.Zero)
                 movement.Normalize();
-        }
-
-        public static Keys[] GetPressedKeys()
-        {
-            return newKeyboard.GetPressedKeys();
         }
     }
 }

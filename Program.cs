@@ -26,10 +26,14 @@ namespace DungeonTest
             {
                 Console.SetOut(writer);
                 using (game = new DungeonTest())
-                game.Run();
+                    game.Run();
             }
         }
 
+        /// <summary>
+        /// Grabs the player's IP
+        /// </summary>
+        /// <returns>Player's IP</returns>
         public static string getIPv4()
         {
             IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
@@ -40,12 +44,6 @@ namespace DungeonTest
             }
             return "null";
         }
-
-        public static void Close() {
-            using (game = new DungeonTest())
-            game.Exit();
-        }
-
     }
 #endif
 }
