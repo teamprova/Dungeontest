@@ -20,7 +20,8 @@ namespace DungeonTest
             int id = CoreGame.sprites.Count;
             Console.WriteLine("\n[dungeontest] creating entity '{0}' under id '{1}'\n", name, id);
 
-            try {
+            try
+            {
                 //add name to sprite list
                 CoreGame.spriteNames.Add(name);
 
@@ -29,7 +30,9 @@ namespace DungeonTest
 
                 Console.WriteLine("\n[dungeontest] created entity '{0}' under id '{1}'\n", name, id);
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine("\n[dungeontest] error occured when spawning entity '{0}' under id '{1}'. error: {2}\n", name, id, ex.Message);
             }
 
@@ -47,10 +50,13 @@ namespace DungeonTest
         {
             Entity myEntity = new Entity(id, x, y);
             Console.WriteLine("\n[dungeontest] spawning entity '{0}'\n", id);
-            try {
+            try
+            {
                 Dungeon.entities.Add(myEntity);
                 Console.WriteLine("\n[dungeontest] entity '{0}' spawned\n", id);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine("\n[dungeontest] error occured when spawning '{0}'. error: {1}\n", id, ex.Message);
             }
         }
@@ -61,9 +67,60 @@ namespace DungeonTest
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
+        public static bool IsBlockSolid(int x, int y)
+        {
+            return Dungeon.IsBlocking(x, y);
+        }
+
+        /// <summary>
+        /// Returns the block at (x, y)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public static object GetBlock(int x, int y)
         {
             return Dungeon.GetBlockAt(x, y);
+        }
+
+        /// <summary>
+        /// Sets the block at (x, y) to specified ID
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="id">The id of the sprite to use</param>
+        /// <param name="solid">Making the block a wall or floor</param>
+        /// <returns></returns>
+        public static void SetBlock(int x, int y, byte id, bool solid)
+        {
+            Dungeon.SetBlockAt(x, y, new Block(id, solid));
+        }
+
+        /// <summary>
+        /// Gets the closest player to this entity
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static Entity GetNearestPlayer(Entity entity)
+        {
+            float closestDistance = float.MaxValue;
+            Entity closestPlayer = CoreGame.players[0];
+
+            foreach (Entity player in CoreGame.players)
+            {
+                float distance = Vector2.Distance(player.pos, entity.pos);
+
+                //if this is closer than the closest found so far then this is the closest player
+                if (distance < closestDistance)
+                {
+                    //set the closest distance
+                    closestDistance = distance;
+                    //set the closest player
+                    closestPlayer = player;
+                }
+            }
+
+            return closestPlayer;
         }
     }
 

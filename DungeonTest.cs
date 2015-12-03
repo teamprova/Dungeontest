@@ -63,7 +63,6 @@ namespace DungeonTest
             {// Window has focus
                 // Update input
                 Input.Update(Window.ClientBounds);
-
                 // Hide the mouse if it is locked to the center
                 IsMouseVisible = !Input.lockMouse;
             }
@@ -74,7 +73,7 @@ namespace DungeonTest
                 graphics.IsFullScreen = !graphics.IsFullScreen;
                 graphics.ApplyChanges();
             }
-            
+
             // Get the deltaTime
             Dungeon.deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 

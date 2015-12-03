@@ -161,7 +161,7 @@ namespace DungeonTest
             if (newKeyboard.IsKeyDown(Keys.S))
                 movement.Y = 1;
 
-            if(movement != Vector2.Zero)
+            if (movement != Vector2.Zero)
                 movement.Normalize();
         }
     }

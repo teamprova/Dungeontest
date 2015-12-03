@@ -11,9 +11,6 @@ namespace DungeonTest
     /// </summary>
     public static class Program
     {
-
-        public static DungeonTest game;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -25,7 +22,7 @@ namespace DungeonTest
             using (StreamWriter writer = new StreamWriter("debug.txt"))
             {
                 Console.SetOut(writer);
-                using (game = new DungeonTest())
+                using (DungeonTest game = new DungeonTest())
                     game.Run();
             }
         }

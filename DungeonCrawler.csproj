@@ -52,10 +52,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
-    <Compile Include="Level\Block.cs" />
+    <Compile Include="Basic classes\Block.cs" />
     <Compile Include="DungeonTest.cs" />
     <Compile Include="Level\Dungeon.cs" />
-    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Basic classes\Entity.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InputTools\Button.cs" />
     <Compile Include="InputTools\Container.cs" />
@@ -71,7 +71,7 @@
     <Compile Include="Screens\ServerList.cs" />
     <Compile Include="Screens\SinglePlayer.cs" />
     <Compile Include="Screens\StartScreen.cs" />
-    <Compile Include="TextureData.cs" />
+    <Compile Include="Basic classes\TextureData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MoonSharp.Interpreter">

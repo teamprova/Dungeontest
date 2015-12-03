@@ -1,4 +1,6 @@
-﻿testEntityID = -1;
+﻿-- Spawns entity that chases when the player hits K
+
+testEntityID = -1;
 deltaTime = 0;
 
 function PostGenerate()
@@ -13,18 +15,15 @@ function ServerUpdate(DeltaTime)
 	-- if server host tapped K
 	if Input:Tapped(Keys["K"]) then
 		-- Spawn an entity with this ID
-		API:SpawnEntity(testEntityID, 1, 5);
+		API:SpawnEntity(testEntityID, 5, 5);
 	end
 end
 
 function EntityUpdate(entity)
 	-- if the entity is one of ours 
 	if entity["id"] == testEntityID then
-		-- move it by deltaTime
-		-- aka move 1 block every second
-		x = entity["pos"]["X"] + deltaTime;
-
-		-- actually move it
-		entity.MoveTo(x, 5);
+		closestPlayer = API:GetNearestPlayer(entity);
+		
+		entity.Chase(closestPlayer, 1);
 	end
 end

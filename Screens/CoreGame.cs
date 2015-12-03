@@ -38,7 +38,7 @@ namespace DungeonTest
         public static float fov = 60;
 
         protected Entity player = new Entity(0, Dungeon.spawn.X, Dungeon.spawn.Y);
-        protected List<Entity> players = new List<Entity>();
+        public static List<Entity> players = new List<Entity>();
         protected Entity[] entityArray = new Entity[] { };
 
         public static List<TextureData> sprites = new List<TextureData>();
@@ -57,6 +57,7 @@ namespace DungeonTest
 
         public void ClearSprites()
         {
+            players.Clear();
             sprites.Clear();
             spriteNames.Clear();
         }
@@ -80,7 +81,7 @@ namespace DungeonTest
             if (Input.Tapped(Keys.F3))
                 debugging = !debugging;
 
-            if(!loading)
+            if (!loading)
                 ControlPlayer();
 
             return this;
@@ -94,25 +95,24 @@ namespace DungeonTest
 
             float forwardSpeed = Input.movement.Y * Dungeon.deltaTime * 4;
             float sideSpeed = Input.movement.X * Dungeon.deltaTime * 4;
+            Vector2 vel = Vector2.Zero;
 
-            player.vel.X += (float)Math.Cos(player.angle) * -forwardSpeed;
-            player.vel.Y += (float)Math.Sin(player.angle) * -forwardSpeed;
+            vel.X += (float)Math.Cos(player.angle) * -forwardSpeed;
+            vel.Y += (float)Math.Sin(player.angle) * -forwardSpeed;
 
-            player.vel.X += (float)Math.Cos(player.angle + Math.PI / 2) * sideSpeed;
-            player.vel.Y += (float)Math.Sin(player.angle + Math.PI / 2) * sideSpeed;
+            vel.X += (float)Math.Cos(player.angle + Math.PI / 2) * sideSpeed;
+            vel.Y += (float)Math.Sin(player.angle + Math.PI / 2) * sideSpeed;
 
 
-            if (!Dungeon.IsBlocking(player.pos + player.vel))
+            if (!Dungeon.IsBlocking(player.pos + vel))
             {
-                player.pos += player.vel;
+                player.pos += vel;
 
-                bobAngle += 5 * player.vel.Length();
+                bobAngle += 5 * vel.Length();
                 bobAngle %= Math.PI * 2;
 
                 headBob = (int)(Math.Sin(bobAngle) * 4);
             }
-
-            player.vel = Vector2.Zero;
         }
 
         protected void UpdateEntityArray()
@@ -140,8 +140,8 @@ namespace DungeonTest
             RayCast();
             DrawEntities();
 
-            if(debugging)
-            DrawMiniMap();
+            if (debugging)
+                DrawMiniMap();
 
             canvas.SetData(ctx.data);
 
@@ -149,7 +149,7 @@ namespace DungeonTest
             // Draw the screen
             spriteBatch.Draw(canvas, Vector2.Zero, null, Color.White, 0, Vector2.Zero, GAME_SCALE, SpriteEffects.None, 0);
 
-            if(debugging)
+            if (debugging)
                 DrawDebuggingInfo(spriteBatch);
 
             spriteBatch.End();
@@ -165,13 +165,10 @@ namespace DungeonTest
                 if (fps.Count > 5)
                     fps.RemoveAt(0);
 
-
                 averagefps = 0;
 
                 foreach (float frames in fps)
-                {
                     averagefps += frames;
-                }
 
                 averagefps = (int)(averagefps / fps.Count);
             }
@@ -214,8 +211,8 @@ namespace DungeonTest
 
         void DrawEntities()
         {
-            for(int i = 0; i < entityArray.Length; i++)
-                if(i != id)
+            for (int i = 0; i < entityArray.Length; i++)
+                if (i != id)
                     entityArray[i].Draw(ctx, player, headBob);
         }
 

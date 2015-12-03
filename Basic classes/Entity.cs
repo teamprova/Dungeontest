@@ -1,14 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace DungeonTest
 {
     public class Entity
     {
-        const float SPEED = 4;
         public Vector2 pos = Vector2.Zero;
-        public Vector2 vel = Vector2.Zero;
         public double angle = 0;
         public int id = 0;
         public float luminosity = 1f;
@@ -25,49 +22,47 @@ namespace DungeonTest
             pos = new Vector2(x, y);
         }
 
-        public void AI(int action, Entity player, float speed, float deltaTime)
+        /// <summary>
+        /// Makes this entity chase another (e)
+        /// </summary>
+        /// <param name="e">Who to chase</param>
+        /// <param name="speed">How fast the entity should move</param>
+        public void Chase(Entity e, float speed)
         {
-            // Create a movement Vector2
-            Vector2 movement = vel * deltaTime;
+            /* commented since we don't actually use vel
+            // Relative velocity (closing vel)
+            vel = e.vel - vel;
 
-            // Find the direction of the player
-            Vector2 direction = player.pos - pos;
+            // Relative distance (range to close)
+            Vector2 distance = e.pos - pos;
+
+            // Time it will take to travel the relative distance at a speed equal to the closing speed
+            Vector2 time = distance / vel;
+
+            // Goal for the enemy
+            Vector2 goal = e.pos + (e.vel * time);
+
+            // Approach the goal
+            pos += goal * Dungeon.deltaTime;
+            */
+            
+            Vector2 direction = e.pos - pos;
             direction.Normalize();
 
-            // Detect what kind of AI we are shooting for
-            if (action == 0) // Chasing an entity
-            {
-                // Relative velocity (closing vel)
-                vel = player.vel - vel;
+            pos += direction * speed * Dungeon.deltaTime;
+        }
 
-                // Relative distance (range to close)
-                Vector2 distance = player.pos - pos;
+        /// <summary>
+        /// Makes this entity evade another (e)
+        /// </summary>
+        /// <param name="e">Who to evade</param>
+        /// <param name="speed">How fast the entity should move</param>
+        public void Evade(Entity e, float speed)
+        {
+            Vector2 direction = pos - e.pos;
+            direction.Normalize();
 
-                // Time it will take to travel the relative distance at a speed equal to the closing speed
-                Vector2 time = distance / vel;
-
-                // Goal for the enemy
-                Vector2 goal = player.pos + (player.vel * time);
-
-                // Approach the goal
-                pos.X += goal.X;
-                pos.Y += goal.Y;
-
-                // Move to the player (old code in case i fuck up)
-                //entityName.pos.X += vel.X * deltaTime;
-                //entityName.pos.Y += vel.Y * deltaTime;
-
-            }
-
-            if (action == 1) // Evading an entity
-            {
-                // Set up velocity for movement
-                vel = direction * speed;
-
-                // Move away from the player
-                pos.X -= direction.X * deltaTime;
-                pos.Y -= direction.Y * deltaTime;
-            }
+            pos += direction * speed * Dungeon.deltaTime;
         }
 
         public virtual void Draw(TextureData ctx, Entity player, int headBob)
@@ -112,7 +107,8 @@ namespace DungeonTest
 
                     Color pixel = spriteData.GetPixel(pixelX, pixelY);
 
-                    if(pixel != Color.Transparent)
+                    // draw if the alpha is greater than zero
+                    if(pixel.A > 0)
                         ctx.SetPixel(x + (int)left, y + (int)top, zIndex, pixel);
                 }
             }
