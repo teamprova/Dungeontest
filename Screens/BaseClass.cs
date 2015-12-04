@@ -11,7 +11,7 @@ namespace DungeonTest
     abstract class Screen
     {
         public static Point resolution = new Point(600, 400);
-        public static Rectangle window = new Rectangle(Point.Zero, resolution);
+        public static Rectangle window = new Rectangle(0, 0, resolution.X, resolution.Y);
         public static Vector3 scale = new Vector3(1, 1, 1);
 
         public bool RequestExit = false;
