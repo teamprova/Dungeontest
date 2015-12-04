@@ -109,6 +109,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
+    <None Include="mods\Generator.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="MoonSharp.Interpreter.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

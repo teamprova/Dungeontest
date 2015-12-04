@@ -6,7 +6,7 @@ function PostGenerate()
 	testEntityID = API:ClaimID("test", "Content/Sprites/Entities/player.png"); -- Create an entity
 
 	-- spawn 40 entities
-	for i = 1, 40 do
+	for i = 1, 25 do
 		SpawnEntity();
 	end
 end

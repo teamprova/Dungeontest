@@ -88,7 +88,7 @@ namespace DungeonTest
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        /// <param name="id">The id of the sprite to use</param>
+        /// <param name="id">The ID of the sprite to use</param>
         /// <param name="solid">Making the block a wall or floor</param>
         /// <returns></returns>
         public static void SetBlock(int x, int y, byte id, bool solid)
@@ -121,6 +121,20 @@ namespace DungeonTest
             }
 
             return closestPlayer;
+        }
+
+        /// <summary>
+        /// Changes the name of the task in the loading screen
+        /// </summary>
+        /// <param name="name"></param>
+        public static void ChangeTask(string name)
+        {
+            Dungeon.task = name;
+        }
+
+        public static void SetDungeonSize(int width, int height)
+        {
+        
         }
     }
 
@@ -175,7 +189,7 @@ namespace DungeonTest
                     // Log completion
                     Console.WriteLine("\n[dungeontest] mod '{0}' loaded!\n", file);
                 }
-                catch (Exception ex)
+                catch (ScriptRuntimeException ex)
                 {
                     // Alerting the issue loading a mod
                     Console.WriteLine("\n[dungeontest] error occured in loading '{0}' mod: {1}\n", file, ex.Message);
@@ -220,10 +234,10 @@ namespace DungeonTest
                         mod.Call(method, args);
                 }
             }
-            catch (Exception e)
+            catch (ScriptRuntimeException e)
             {
                 // Error warning
-                Console.WriteLine("\n[dungeontest] \"" + eventName + "\" event error: " + e.Message + "\n");
+                Console.WriteLine("\n[dungeontest] \"" + eventName + "\" event error: " + e.DecoratedMessage + "\n");
             }
         }
     }

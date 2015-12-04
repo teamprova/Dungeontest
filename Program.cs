@@ -21,7 +21,7 @@ namespace DungeonTest
 
             using (StreamWriter writer = new StreamWriter("debug.txt"))
             {
-                Console.SetOut(writer);
+                //Console.SetOut(writer);
                 using (DungeonTest game = new DungeonTest())
                     game.Run();
             }

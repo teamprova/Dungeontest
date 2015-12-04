@@ -5,8 +5,8 @@ namespace DungeonTest
     {
         public SinglePlayer()
         {
+            players.Clear();
             ClearSprites();
-            LoadDefaultSprites();
 
             Dungeon.Generate();
 

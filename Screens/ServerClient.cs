@@ -20,9 +20,10 @@ namespace DungeonTest
 
         public Client(IPAddress IP)
         {
+            players.Clear();
             ClearSprites();
 
-            Dungeon.status = "CONNECTING";
+            Dungeon.task = "CONNECTING";
             Dungeon.Clear();
 
             HostIP = new IPEndPoint(IP, PORT);
@@ -43,7 +44,7 @@ namespace DungeonTest
 
             if (lastUpdate >= MAX_IDLE_TIME)
             {
-                Dungeon.status = "CONNECTION FAILED";
+                Dungeon.task = "CONNECTION FAILED";
                 timeSpentReading += deltaTime;
 
                 if (timeSpentReading > READ_TIME || !loading)
@@ -75,25 +76,25 @@ namespace DungeonTest
                         switch (protocol)
                         {
                             case (byte)Protocol.UPDATE_ID:
-                                Dungeon.status = "UPDATING CLIENT ID";
+                                Dungeon.task = "UPDATING CLIENT ID";
                                 id = BitConverter.ToInt32(response, 0);
                                 break;
                             case (byte)Protocol.UPDATE_ENTITY_DATA:
-                                Dungeon.status = "FETCHING ENTITIES";
+                                Dungeon.task = "FETCHING ENTITIES";
                                 UpdateEntities(response);
                                 break;
                             case (byte)Protocol.MAP_CHANGE:
-                                Dungeon.status = "UPDATING DUNGEON";
+                                Dungeon.task = "UPDATING DUNGEON";
                                 Dungeon.LoadFromData(response);
                                 Input.lockMouse = true;
                                 loading = false;
                                 break;
                             case (byte)Protocol.UPDATE_PLAYER:
-                                Dungeon.status = "GETTING PLAYER DATA";
+                                Dungeon.task = "GETTING PLAYER DATA";
                                 player.CopyBytes(response);
                                 break;
                             case (byte)Protocol.SEND_SPRITE:
-                                Dungeon.status = "DOWNLOADING ASSETS";
+                                Dungeon.task = "DOWNLOADING ASSETS";
                                 TextureData data = new TextureData(response);
                                 sprites.Add(data);
                                 spriteNames.Add("?");

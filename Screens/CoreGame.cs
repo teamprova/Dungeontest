@@ -24,7 +24,7 @@ namespace DungeonTest
         // Test Stuff
         const int MAKE_ME_FEEL_TALLER = 0;
 
-        const float MIN_BRIGHTNESS = .05f;
+        const float MIN_BRIGHTNESS = .1f;
 
         public static TextureData roofTextureData;
 
@@ -55,18 +55,12 @@ namespace DungeonTest
         public int headBob = 0;
         double bobAngle = 0;
 
-        public void ClearSprites()
+        public static void ClearSprites()
         {
-            players.Clear();
             sprites.Clear();
             spriteNames.Clear();
-        }
-
-        protected void LoadDefaultSprites()
-        {
             API.ClaimID("Player", "Content/Sprites/Entities/player.png");
-            API.ClaimID("Cement", "Content/Sprites/Blocks/cement.png");
-            API.ClaimID("CementBricks", "Content/Sprites/Blocks/brick.png");
+            ModHandler.HandleEvent("LoadSprites");
         }
 
         public override Screen Update(float deltaTime)
@@ -204,7 +198,7 @@ namespace DungeonTest
             spriteBatch.Begin();
 
             //draw the status
-            spriteBatch.DrawString(Tool.Font, Dungeon.status, STATUS_TEXT_POS, Color.White);
+            spriteBatch.DrawString(Tool.Font, Dungeon.task, STATUS_TEXT_POS, Color.White);
 
             spriteBatch.End();
         }
@@ -392,8 +386,8 @@ namespace DungeonTest
             Point offset = new Point(0, 0);
 
             // loop through world
-            for (int x = 0; x < Dungeon.WIDTH; x++)
-                for (int y = 0; y < Dungeon.HEIGHT; y++)
+            for (int x = 0; x < Dungeon.width; x++)
+                for (int y = 0; y < Dungeon.height; y++)
                 {
                     //draw solid blocks
                     if (!Dungeon.IsBlocking(x, y))

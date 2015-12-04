@@ -70,3 +70,23 @@ C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Release\OpenTK.dll
 C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Release\Tao.Sdl.dll
 C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\obj\x86\Release\DungeonCrawler.csprojResolveAssemblyReference.cache
 C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Release\mods\BasicMovement.lua
+E:\C# XNA Framework\Dungeontest\obj\x86\Release\DungeonCrawler.exe
+E:\C# XNA Framework\Dungeontest\obj\x86\Release\DungeonCrawler.pdb
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\Content\Fonts\default.xnb
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\Content\SaveData\ServerList.txt
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\Content\Sprites\Blocks\brick.png
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\Content\Sprites\Blocks\cement.png
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\Content\Sprites\Entities\player.png
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\Content\Sprites\roof.png
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\MoonSharp.Interpreter.dll
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\SDL.dll
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\SDL_mixer.dll
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\mods\test.lua
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\mods\BasicMovement.lua
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\DungeonCrawler.exe
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\DungeonCrawler.pdb
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\MonoGame.Framework.dll
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\OpenTK.dll
+E:\C# XNA Framework\Dungeontest\bin\Windows\Release\Tao.Sdl.dll
+E:\C# XNA Framework\Dungeontest\obj\x86\Release\DungeonCrawler.csprojResolveAssemblyReference.cache
+C:\Users\Arthur\OneDrive\C# XNA\Dungeontest\bin\Windows\Release\mods\Generator.lua

@@ -7,41 +7,30 @@ namespace DungeonTest
 {
     class Dungeon
     {
-        public static int WIDTH = 100;
-        public static int HEIGHT = 100;
-
         const double TAU = Math.PI * 2;
-        public static int MIN_ROOM_SIZE = 8;
-        public static int MAX_ROOM_SIZE = 15;
-        public static int MIN_ROOMS = 15;
-        public static int MAX_ROOMS = 20;
 
         public static List<Entity> entities = new List<Entity>();
-        public static Block[,] map = new Block[HEIGHT, WIDTH];
         public static Vector2 spawn = new Vector2(2, 2);
-        public static byte[] mapData = new byte[] { };
 
-        public static List<Rectangle> rooms = new List<Rectangle>();
-        public static string status = "";
-        public static bool complete = false;
+        public static Block[,] map;
+        public static byte[] mapData = new byte[] { };
+        public static int width = 100;
+        public static int height = 100;
 
         public static float deltaTime = 0;
 
-        static Random rnd = new Random();
-        static float roomsToMake = 0;
-
         public static Thread generationThread;
+        public static string task = "";
+        public static bool complete = false;
 
         #region Generator
         public static void Generate()
         {
             complete = false;
-            status = "";
+            task = "";
             Clear();
 
             Console.WriteLine("\n[dungeontest] starting map generation\n");
-
-            ModHandler.HandleEvent("PreGenerate");
 
             generationThread = new Thread(new ThreadStart(GeneratorThread));
             generationThread.IsBackground = true;
@@ -50,214 +39,33 @@ namespace DungeonTest
 
         static void GeneratorThread()
         {
-            // Variables for the room
-            roomsToMake = rnd.Next(MIN_ROOMS, MAX_ROOMS); // Random room count
-
-            MakeRooms();
-            SquashRooms();
-            PlaceBlocks();
-            UpdateData();
+            ModHandler.HandleEvent("PreGenerate");
+            ModHandler.HandleEvent("PostGenerate");
 
             complete = true;
-
-            ModHandler.HandleEvent("PostGenerate");
 
             Console.WriteLine("\n[dungeontest] map generation complete\n");
         }
 
         public static void Clear()
         {
-            map = new Block[WIDTH, HEIGHT];
+            map = new Block[width, height];
             entities.Clear();
-            rooms.Clear();
+            CoreGame.ClearSprites();
         }
 
         public static float GetProgress()
         {
             float placedBlocks = 0;
 
-            for (int x = 0; x < WIDTH; x++)
-                for (int y = 0; y < HEIGHT; y++)
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
                 {
                     if (GetBlockAt(x, y) != null)
                         placedBlocks++;
                 }
 
-            return placedBlocks / (WIDTH * HEIGHT);
-        }
-
-        static void MakeRooms()
-        {// Generate the rooms
-            status = "MAKING ROOMS";
-            Console.WriteLine("\n[dungeontest] generating rooms in map\n");
-
-            for (int i = 0; i < roomsToMake; i++)
-            {
-                Rectangle room = new Rectangle();
-
-                room.X = rnd.Next(1, WIDTH - MAX_ROOM_SIZE - 1);
-                room.Y = rnd.Next(1, HEIGHT - MAX_ROOM_SIZE - 1);
-                room.Width = rnd.Next(MIN_ROOM_SIZE, MAX_ROOM_SIZE);
-                room.Height = rnd.Next(MIN_ROOM_SIZE, MAX_ROOM_SIZE);
-
-                if (DoesCollide(room, i))
-                {
-                    i--;
-                    continue;
-                }
-                room.Width--;
-                room.Height--;
-
-                rooms.Add(room);
-            }
-        }
-
-        static void SquashRooms()
-        {
-            status = "SQUISHING ROOMS";
-            Console.WriteLine("\n[dungeontest] squishing rooms in map\n");
-
-            for (var i = 0; i < 10; i++)
-            {
-                for (var j = 0; j < rooms.Count; j++)
-                {
-                    Rectangle room = rooms[j];
-
-                    while (true)
-                    {
-                        Point oldPosition = new Point(room.X, room.Y);
-
-                        // try to move to 1, 1
-                        if (room.X > 1) room.X--;
-                        if (room.Y > 1) room.Y--;
-                        rooms[j] = room;
-
-                        //reached 1, 1
-                        if ((room.X == 1) && (room.Y == 1))
-                            break;
-
-                        if (DoesCollide(room, j))
-                        {// hit another room
-                            // this is as far as we go
-                            room.X = oldPosition.X;
-                            room.Y = oldPosition.Y;
-                            rooms[j] = room;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        static void PlaceBlocks()
-        {
-            //making pathways
-            status = "CREATING PATHS";
-            Console.WriteLine("\n[dungeontest] generating pathways\n");
-
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                Rectangle room = rooms[i];
-                Rectangle closestRoom = FindClosestRoom(room, room);
-                Rectangle secondClosestRoom = FindClosestRoom(room, closestRoom);
-
-                CreatePath(room, closestRoom);
-                CreatePath(room, secondClosestRoom);
-            }
-
-            //place rooms
-            status = "PLACING ROOMS";
-            Console.WriteLine("\n[dungeontest] placing pathways\n");
-
-            foreach (Rectangle room in rooms)
-                for (int x = room.X; x < room.X + room.Width; x++)
-                {
-                    for (int y = room.Y; y < room.Y + room.Height; y++)
-                    {
-                        SetBlockAt(x, y, new Block(1, false));
-                    }
-                }
-
-            //set null blocks to solid cobble
-            status = "PLACING BLOCKS";
-            Console.WriteLine("\n[dungeontest] placing blocks\n");
-
-            for (int x = 0; x < WIDTH; x++)
-                for (int y = 0; y < HEIGHT; y++)
-                {
-                    if (GetBlockAt(x, y) == null)
-                        SetBlockAt(x, y, new Block(2, true));
-                }
-        }
-
-        static void CreatePath(Rectangle roomA, Rectangle roomB)
-        {
-            Point pointA = new Point(
-                rnd.Next(roomA.X, roomA.X + roomA.Width),
-                rnd.Next(roomA.Y, roomA.Y + roomA.Height));
-
-            Point pointB = new Point(
-               rnd.Next(roomB.X, roomB.X + roomB.Width),
-               rnd.Next(roomB.Y, roomB.Y + roomB.Height)
-            );
-            while (!pointA.Equals(pointB))
-            {
-                if (pointB.X != pointA.X)
-                {
-                    if (pointB.X > pointA.X)
-                        pointB.X--;
-                    else
-                        pointB.X++;
-                }
-                else if (pointB.Y != pointA.Y)
-                {
-                    if (pointB.Y > pointA.Y)
-                        pointB.Y--;
-                    else
-                        pointB.Y++;
-                }
-
-                SetBlockAt(pointB.X, pointB.Y, new Block(1, false));
-            }
-        }
-
-        static bool DoesCollide(Rectangle room, int ignore)
-        {
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                if (i == ignore)
-                    continue;
-
-                Rectangle check = rooms[i];
-
-                if (!((room.X + room.Width < check.X) || (room.X > check.X + check.Width) || (room.Y + room.Height < check.Y) || (room.Y > check.Y + check.Height)))
-                    return true;
-            }
-
-            return false;
-        }
-
-        static Rectangle FindClosestRoom(Rectangle room, Rectangle ignore)
-        {
-            Point mid = room.Center;
-
-            Rectangle closest = new Rectangle();
-            int closestDistance = 1000;
-
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                Rectangle check = rooms[i];
-                if (check.Equals(room) || check.Equals(ignore)) continue;
-                Point checkMid = check.Center;
-
-                int distance = Math.Abs(mid.X - checkMid.X) + Math.Abs(mid.Y - checkMid.Y);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closest = check;
-                }
-            }
-            return closest;
+            return placedBlocks / (width * height);
         }
         #endregion
 
@@ -265,16 +73,16 @@ namespace DungeonTest
         static void UpdateData()
         {
             // 9 = protocol + spawn position
-            mapData = new byte[9 + HEIGHT * WIDTH * 2];
+            mapData = new byte[9 + height * width * 2];
 
             mapData[0] = (byte)Protocol.MAP_CHANGE;
             BitConverter.GetBytes(spawn.X).CopyTo(mapData, 1);
             BitConverter.GetBytes(spawn.Y).CopyTo(mapData, 5);
 
-            for (int x = 0; x < WIDTH; x++)
-                for (int y = 0; y < HEIGHT; y++)
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
                 {
-                    int i = 9 + (y * WIDTH + x) * 2;
+                    int i = 9 + (y * width + x) * 2;
 
                     Block block = GetBlockAt(x, y);
 
@@ -290,10 +98,10 @@ namespace DungeonTest
 
             Clear();
 
-            for (int x = 0; x < WIDTH; x++)
-                for (int y = 0; y < HEIGHT; y++)
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < height; y++)
                 {
-                    int i = 8 + (y * WIDTH + x) * 2;
+                    int i = 8 + (y * width + x) * 2;
 
                     byte type = mapData[i];
                     bool solid = BitConverter.ToBoolean(mapData, i + 1);
@@ -402,7 +210,7 @@ namespace DungeonTest
         /// <returns></returns>
         public static bool IsWithin(int x, int y)
         {
-            return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
+            return x >= 0 && x < width && y >= 0 && y < height;
         }
 
         /// <summary>
@@ -426,7 +234,7 @@ namespace DungeonTest
             // TODO: Mod entity updates here
             ModHandler.HandleEvent("ServerUpdate", deltaTime);
 
-            foreach (Entity e in entities)
+            foreach (Entity e in entities.ToArray())
             {
                 ModHandler.HandleEvent("EntityUpdate", e);
             }
