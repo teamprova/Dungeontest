@@ -6,9 +6,9 @@ This is a test about retro-styled games. We have no clue what this game will be 
 Load up the Visual Studio project, build and run, and you should be good to go. The application should export to the bin/ folder.
 
 ###### Ubuntu
-Install Mono, and SDL, by running "sudo apt-get install libsdl1.2-dev libsdl1.2debian mono-devel mono-complete libsdl-mixer1.2 build-essential"
+Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open the solution in "/DungeontestLinux", and you can build and run, completely fine. Application should export to bin/.
 
-That will make it possible to run the .exe with Ubuntu. Also, make sure to have installed MonoDevelop, and installed MonoGame on it, if you want to modify the engine.
+This will export to an .exe, but because you have Mono, you goto the /bin directory in terminal and type "mono DungeontestLinux.exe", and it will run.
 
 ###### Disclaimer
 Further instruction on compiling will be given in a later version of this README. And with detailed answers to why it sometimes does not work with Linux, and how to solve it.
