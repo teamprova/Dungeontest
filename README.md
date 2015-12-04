@@ -5,7 +5,7 @@ This is a test about retro-styled games. We have no clue what this game will be 
 ###### Windows
 Load up the Visual Studio project, build and run, and you should be good to go. The application should export to the bin/ folder.
 
-###### Ubuntu
+###### GNU/Linux
 Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open the solution in "/DungeontestLinux", and you can build and run, completely fine. Application should export to bin/.
 
 This will export to an .exe, but because you have Mono, you goto the /bin directory in terminal and type "mono DungeontestLinux.exe", and it will run.
