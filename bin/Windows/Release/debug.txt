@@ -1,0 +1,331 @@
+
+[dungeontest] loading game content
+
+
+[dungeontest] loading mods
+
+
+[dungeontest] initializing mod 'mods/BasicMovement.lua'
+
+[dungeontest] mod 'mods/BasicMovement.lua' loaded!
+
+
+[dungeontest] 1 mods have been loaded
+
+
+[dungeontest] initializing mod 'mods/test.lua'
+
+[dungeontest] mod 'mods/test.lua' loaded!
+
+
+[dungeontest] 2 mods have been loaded
+
+
+[dungeontest] game content loaded
+
+
+[dungeontest] main menu loading
+
+
+[dungeontest] main menu loaded
+
+
+[dungeontest] creating entity 'Player' under id '0'
+
+
+[dungeontest] created entity 'Player' under id '0'
+
+
+[dungeontest] creating entity 'Cement' under id '1'
+
+
+[dungeontest] created entity 'Cement' under id '1'
+
+
+[dungeontest] creating entity 'CementBricks' under id '2'
+
+
+[dungeontest] created entity 'CementBricks' under id '2'
+
+
+[dungeontest] starting map generation
+
+
+[dungeontest] generating rooms in map
+
+
+[dungeontest] squishing rooms in map
+
+
+[dungeontest] generating pathways
+
+
+[dungeontest] placing pathways
+
+
+[dungeontest] placing blocks
+
+
+[dungeontest] "ServerUpdate" event error: Cannot enter the same MoonSharp processor from two different threads : 11 and 9
+
+
+[dungeontest] creating entity 'test' under id '3'
+
+
+[dungeontest] created entity 'test' under id '3'
+
+
+[dungeontest] creating entity 'test' under id '4'
+
+
+[dungeontest] created entity 'test' under id '4'
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] spawning entity '4'
+
+
+[dungeontest] entity '4' spawned
+
+
+[dungeontest] map generation complete
+
+
+[dungeontest] spawning entity '3'
+
+
+[dungeontest] entity '3' spawned
+

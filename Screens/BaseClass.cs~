@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,11 @@ namespace DungeonTest
     abstract class Screen
     {
         public static Point resolution = new Point(600, 400);
+<<<<<<< HEAD
+		public static Rectangle window = new Rectangle(0, 0, resolution.X, resolution.Y);
+=======
         public static Rectangle window = new Rectangle(Point.Zero, resolution);
+>>>>>>> e3744defed219678bc792da71f5997a09fb907d0
         public static Vector3 scale = new Vector3(1, 1, 1);
 
         public bool RequestExit = false;
@@ -32,4 +36,3 @@ namespace DungeonTest
         }
     }
 }
-
