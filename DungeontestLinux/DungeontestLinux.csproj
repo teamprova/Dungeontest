@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{959C2A87-9DDF-42DB-B277-47AE60D23BE8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DungeontestLinux</RootNamespace>
+    <AssemblyName>DungeontestLinux</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MonoGamePlatform>DesktopGL</MonoGamePlatform>
+    <MonoGameInstallDirectory Condition="'$(OS)' != 'Unix' ">$(MSBuildProgramFiles32)</MonoGameInstallDirectory>
+    <MonoGameInstallDirectory Condition="'$(OS)' == 'Unix' ">$(MSBuildExtensionsPath)</MonoGameInstallDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>packages\MonoGame.Framework.Linux.3.3.0.0\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>packages\MonoGame.Framework.Linux.3.3.0.0\lib\net40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Sdl">
+      <HintPath>packages\MonoGame.Framework.Linux.3.3.0.0\lib\net40\Tao.Sdl.dll</HintPath>
+    </Reference>
+    <Reference Include="MoonSharp.Interpreter">
+      <HintPath>..\MoonSharp.Interpreter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game1.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\API.cs">
+      <Link>API.cs</Link>
+    </Compile>
+    <Compile Include="..\DungeonTest.cs">
+      <Link>DungeonTest.cs</Link>
+    </Compile>
+    <Compile Include="..\Input.cs">
+      <Link>Input.cs</Link>
+    </Compile>
+    <Compile Include="..\InputTools\Button.cs">
+      <Link>InputTools\Button.cs</Link>
+    </Compile>
+    <Compile Include="..\InputTools\Container.cs">
+      <Link>InputTools\Container.cs</Link>
+    </Compile>
+    <Compile Include="..\InputTools\ServerButton.cs">
+      <Link>InputTools\ServerButton.cs</Link>
+    </Compile>
+    <Compile Include="..\InputTools\TextBox.cs">
+      <Link>InputTools\TextBox.cs</Link>
+    </Compile>
+    <Compile Include="..\InputTools\Tool.cs">
+      <Link>InputTools\Tool.cs</Link>
+    </Compile>
+    <Compile Include="..\Level\Dungeon.cs">
+      <Link>Level\Dungeon.cs</Link>
+    </Compile>
+    <Compile Include="..\Screens\BaseClass.cs">
+      <Link>Screens\BaseClass.cs</Link>
+    </Compile>
+    <Compile Include="..\Screens\CoreGame.cs">
+      <Link>Screens\CoreGame.cs</Link>
+    </Compile>
+    <Compile Include="..\Screens\ServerClient.cs">
+      <Link>Screens\ServerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Screens\ServerHost.cs">
+      <Link>Screens\ServerHost.cs</Link>
+    </Compile>
+    <Compile Include="..\Screens\ServerList.cs">
+      <Link>Screens\ServerList.cs</Link>
+    </Compile>
+    <Compile Include="..\Screens\SinglePlayer.cs">
+      <Link>Screens\SinglePlayer.cs</Link>
+    </Compile>
+    <Compile Include="..\Screens\StartScreen.cs">
+      <Link>Screens\StartScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\Basic classes\Entity.cs">
+      <Link>Basic classes\Entity.cs</Link>
+    </Compile>
+    <Compile Include="..\Basic classes\TextureData.cs">
+      <Link>Basic classes\TextureData.cs</Link>
+    </Compile>
+    <Compile Include="..\Level\Block.cs">
+      <Link>Level\Block.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icon.png" />
+    <None Include="Content\Content.mgcb" />
+    <None Include="packages.config" />
+    <None Include="..\MoonSharp.Interpreter.dll">
+      <Link>MoonSharp.Interpreter.dll</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OpenTK.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tao.Sdl.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Fonts\default.png">
+      <Link>Content\Fonts\default.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\SaveData\ServerList.txt">
+      <Link>Content\SaveData\ServerList.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Sprites\roof.png">
+      <Link>Content\Sprites\roof.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Sprites\Entities\player.png">
+      <Link>Content\Sprites\Entities\player.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Sprites\Blocks\brick.png">
+      <Link>Content\Sprites\Blocks\brick.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Sprites\Blocks\cement.png">
+      <Link>Content\Sprites\Blocks\cement.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Content\Sprites\Blocks\wood.png">
+      <Link>Content\Sprites\Blocks\wood.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <ItemGroup>
+    <EmbeddedResource Include="..\mods\BasicMovement.lua">
+      <Link>mods\BasicMovement.lua</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\mods\test.lua">
+      <Link>mods\test.lua</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>/home/acerio/Desktop/Dungeontest-master/DungeontestLinux/Content/Fonts/default.png</SourceFile>
+  <SourceTime>2015-12-03T01:37:19-05:00</SourceTime>
+  <DestFile>/home/acerio/Desktop/Dungeontest-master/DungeontestLinux/Content/bin/Windows/Fonts/default.xnb</DestFile>
+  <DestTime>2015-12-03T20:20:07-05:00</DestTime>
+  <Importer>TextureImporter</Importer>
+  <ImporterTime>2015-11-27T05:08:06-05:00</ImporterTime>
+  <Processor>FontTextureProcessor</Processor>
+  <ProcessorTime>2015-11-27T05:08:06-05:00</ProcessorTime>
+  <Parameters>
+    <Key>FirstCharacter</Key>
+    <Value> </Value>
+  </Parameters>
+  <Parameters>
+    <Key>PremultiplyAlpha</Key>
+    <Value>True</Value>
+  </Parameters>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Color</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
