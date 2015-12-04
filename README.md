@@ -10,6 +10,8 @@ Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open the
 
 This will export to an .exe, but because you have Mono, you goto the /bin directory in terminal and type "mono DungeontestLinux.exe", and it will run.
 
+Note: If you compile to Debug, make a folder called /Fonts/ in the /bin/Debug/Content folder, and copy the 'default.xnb' file from /bin/Release/Content/Fonts, and it should work just fine. The pipeline was being annoying, so we had to make a workaround.
+
 ###### Disclaimer
 Further instruction on compiling will be given in a later version of this README. And with detailed answers to why it sometimes does not work with Linux, and how to solve it.
 
