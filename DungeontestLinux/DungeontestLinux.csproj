@@ -111,8 +111,8 @@
     <Compile Include="..\Basic classes\TextureData.cs">
       <Link>Basic classes\TextureData.cs</Link>
     </Compile>
-    <Compile Include="..\Level\Block.cs">
-      <Link>Level\Block.cs</Link>
+    <Compile Include="..\Basic classes\Block.cs">
+      <Link>Basic classes\Block.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
