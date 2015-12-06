@@ -242,10 +242,7 @@ namespace DungeonTest
             if (block == null)
                 return;
 
-            double height = viewDist / (dist * Math.Cos(player.angle - rayAngle));
-
-            if (height == 0)
-                return;
+            double height = viewDist / (dist * Math.Cos(player.angle - rayAngle)) + 1;
 
             int offsetHeight = (int)((GAME_HEIGHT - height) / 2 + bob);
 
