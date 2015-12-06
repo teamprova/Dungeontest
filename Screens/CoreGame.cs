@@ -36,6 +36,7 @@ namespace DungeonTest
         TextureData ctx = new TextureData(GAME_WIDTH, GAME_HEIGHT);
 
         public static float fov = 60;
+        public static double viewDist = 0;
 
         protected Entity player = new Entity(0, Dungeon.spawn.X, Dungeon.spawn.Y);
         public static List<Entity> players = new List<Entity>();
@@ -119,6 +120,8 @@ namespace DungeonTest
             base.Draw(GraphicsDevice, spriteBatch);
 
             GraphicsDevice.Clear(Color.Black);
+
+            viewDist = (GAME_WIDTH / 2) / Math.Tan(fov * Math.PI / 360);
 
             if (loading)
             {
@@ -214,10 +217,9 @@ namespace DungeonTest
         {
             double fovInRadians = fov * Math.PI / 180f;
 
-            for (var i = 0; i < canvas.Width; i++)
+            for (int i = 0; i < canvas.Width; i++)
             {
-                double rayAngle = (i / (float)GAME_WIDTH) * fovInRadians - fovInRadians / 2f;
-
+                double rayAngle = (i / (double)GAME_WIDTH) * fovInRadians - fovInRadians / 2f;
                 //add the player's angle for camera rotation
                 rayAngle += player.angle;
                 int bob = MAKE_ME_FEEL_TALLER + headBob;
@@ -237,40 +239,37 @@ namespace DungeonTest
 
         public void DrawRay(Block block, int x, int bob, double rayAngle, float dist, float textureX, Vector2 collision)
         {
-            int height = (int)(GetViewDist() / (dist * Math.Cos(player.angle - rayAngle)));
+            if (block == null)
+                return;
+
+            double height = viewDist / (dist * Math.Cos(player.angle - rayAngle));
+
             if (height == 0)
                 return;
 
-            int offsetHeight = (GAME_HEIGHT - height) / 2 + bob;
+            int offsetHeight = (int)((GAME_HEIGHT - height) / 2 + bob);
 
             float brightness = GetBrightness(collision.X, collision.Y);
 
-            for (int i = (offsetHeight < 0) ? -offsetHeight : 0; i < height; i++)
+            for (int y = (offsetHeight < 0) ? -offsetHeight : 0; y < height; y++)
             {
-                if (i + offsetHeight > GAME_HEIGHT)
+                if (y + offsetHeight > GAME_HEIGHT)
                     break;
-
-                if (block == null)
-                    continue;
 
                 TextureData sprite = sprites[block.blockType];
 
-                int pixelY = i * sprite.height / height;
+                int pixelY = (int)(y / height * sprite.height);
                 int pixelX = (int)(textureX * sprite.width);
 
                 Color pixel = sprite.GetPixel(pixelX, pixelY);
 
                 if (collision.X % 1 == 0)
-                {
-                    pixel.R -= 10;
-                    pixel.G -= 10;
-                    pixel.B -= 10;
-                }
+                    TextureData.Darken(ref pixel, brightness * .9f);
+                else
+                    TextureData.Darken(ref pixel, brightness);
 
-                TextureData.Darken(ref pixel, brightness);
-
-                ctx.SetPixel(x, i + offsetHeight, pixel);
-                ctx.SetZIndex(x, i + offsetHeight, dist);
+                ctx.SetPixel(x, y + offsetHeight, pixel);
+                ctx.SetZIndex(x, y + offsetHeight, dist);
             }
         }
 
@@ -278,7 +277,6 @@ namespace DungeonTest
         {
             Matrix transform = Matrix.CreateRotationZ((float)rayAngle);
             double offsetAngle = Math.Cos(player.angle - rayAngle);
-
 
             for (int y = 0; y < GAME_HEIGHT / 2 + MAKE_ME_FEEL_TALLER; y++)
             {
@@ -292,10 +290,9 @@ namespace DungeonTest
                     {
                         Vector2 texturePos = Vector2.Zero;
 
-                        slopeIntercept = (float)(GetViewDist() / 2 / slope / offsetAngle);
-
-                        texturePos.X = slopeIntercept;
-                        texturePos = Vector2.Transform(texturePos, transform);
+                        slopeIntercept = (float)(viewDist / 2 / slope / offsetAngle);
+                        texturePos.X = (float)(Math.Cos(rayAngle) * slopeIntercept);
+                        texturePos.Y = (float)(Math.Sin(rayAngle) * slopeIntercept);
                         texturePos += player.pos;
 
                         if (texturePos.X < 0 || texturePos.Y < 0)
@@ -336,24 +333,13 @@ namespace DungeonTest
                     {
                         Vector2 texturePos = Vector2.Zero;
 
-
-                        slopeIntercept = (float)(GetViewDist() / 2 / slope / offsetAngle);
-                        texturePos.X = slopeIntercept;
-                        texturePos = Vector2.Transform(texturePos, transform);
+                        slopeIntercept = (float)(viewDist / 2 / slope / offsetAngle);
+                        texturePos.X = (float)(Math.Cos(rayAngle) * slopeIntercept);
+                        texturePos.Y = (float)(Math.Sin(rayAngle) * slopeIntercept);
                         texturePos += player.pos;
 
-
-                        if (texturePos.Y < 0)
-                        {
-                            texturePos.Y += (float)Math.Ceiling(Math.Abs(texturePos.Y));
-                        }
-
-                        texturePos.X = Math.Abs(texturePos.X);
-                        texturePos.Y = Math.Abs(texturePos.Y);
-
-                        float brightness = GetBrightness(texturePos.X, texturePos.Y);
-
                         Block block = Dungeon.GetBlockAt(texturePos.X, texturePos.Y);
+                        float brightness = GetBrightness(texturePos.X, texturePos.Y);
 
                         if (block != null)
                         {
@@ -376,11 +362,6 @@ namespace DungeonTest
             }
         }
 
-        public static double GetViewDist()
-        {
-            return (GAME_WIDTH / 2) / Math.Tan(fov * Math.PI / 360);
-        }
-
         void DrawMiniMap()
         {
             Point offset = new Point(0, 0);
@@ -400,14 +381,11 @@ namespace DungeonTest
 
         float GetBrightness(float x, float y)
         {
-            float brightness = 0;
+            float brightness = MIN_BRIGHTNESS;
             Vector2 coords = new Vector2(x, y);
 
             foreach (Entity e in entityArray)
             {
-                if (e.luminosity == 0 || e.luminosity < brightness)
-                    continue;
-
                 float distance = Vector2.DistanceSquared(coords, e.pos) + 1;
 
                 brightness += e.luminosity / distance;
@@ -416,7 +394,7 @@ namespace DungeonTest
                     return 1;
             }
 
-            return Math.Max(brightness, MIN_BRIGHTNESS);
+            return brightness;
         }
     }
 }

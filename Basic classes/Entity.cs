@@ -82,34 +82,32 @@ namespace DungeonTest
             double spriteAngle = Math.Atan2(dist.Y, dist.X) - player.angle;
 
             // Size of the sprite
-            int size = (int)(CoreGame.GetViewDist() / (Math.Cos(spriteAngle) * distance));
+            int size = (int)(CoreGame.viewDist / (Math.Cos(spriteAngle) * distance));
 
             // X-position on screen
-            float left = (float)(Math.Tan(spriteAngle) * CoreGame.GetViewDist());
+            int left = (int)(Math.Tan(spriteAngle) * CoreGame.viewDist);
             left = (CoreGame.GAME_WIDTH / 2 + left - size / 2);
 
-            float top = (CoreGame.GAME_HEIGHT - size) / 2 + headBob;
+            int top = (CoreGame.GAME_HEIGHT - size) / 2 + headBob;
 
-            float zIndex = distance;
-
-            for(int x = (left < 0) ? (int)-left : 0; x < size; x++)
+            for(int x = (left < 0) ? -left : 0; x < size; x++)
             {
-                if (x + left > CoreGame.GAME_WIDTH)
+                if (x + left >= CoreGame.GAME_WIDTH)
                     break;
 
-                for (int y = (top < 0) ? (int)-top : 0; y < size; y++)
+                for (int y = (top < 0) ? -top : 0; y < size; y++)
                 {
-                    if (y + top > CoreGame.GAME_HEIGHT)
+                    if (y + top >= CoreGame.GAME_HEIGHT)
                         break;
 
-                    int pixelX = x * (spriteData.width) / size;
-                    int pixelY = y * (spriteData.height) / size;
+                    int pixelX = x * spriteData.width / size;
+                    int pixelY = y * spriteData.height / size;
 
                     Color pixel = spriteData.GetPixel(pixelX, pixelY);
 
                     // draw if the alpha is greater than zero
                     if(pixel.A > 0)
-                        ctx.SetPixel(x + (int)left, y + (int)top, zIndex, pixel);
+                        ctx.SetPixel(x + left, y + top, distance, pixel);
                 }
             }
         }
