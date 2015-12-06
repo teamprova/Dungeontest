@@ -122,6 +122,9 @@
     <None Include="..\MoonSharp.Interpreter.dll">
       <Link>MoonSharp.Interpreter.dll</Link>
     </None>
+    <None Include="..\mods\Generator.lua">
+      <Link>mods\Generator.lua</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="OpenTK.dll.config">
