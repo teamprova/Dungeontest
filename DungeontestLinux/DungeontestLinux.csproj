@@ -122,9 +122,6 @@
     <None Include="..\MoonSharp.Interpreter.dll">
       <Link>MoonSharp.Interpreter.dll</Link>
     </None>
-    <None Include="..\mods\Generator.lua">
-      <Link>mods\Generator.lua</Link>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="OpenTK.dll.config">
@@ -171,6 +168,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\mods\test.lua">
       <Link>mods\test.lua</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\mods\Generator.lua">
+      <Link>mods\Generator.lua</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
