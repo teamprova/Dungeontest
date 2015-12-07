@@ -22,6 +22,9 @@ With Visual Studio, create a new file in the source folder, not /DungeontestLinu
 ###### GNU/Linux
 in MonoDevelop, do not create a file inside /DungeontestLinux/, create it in the root source folder. Then when adding it to MonoDevelop, right click on the destination, and click "Add files", add the file, but choose to add a link, not copy or move.
 
+###### Deleted/moved file?
+If you have a deleted file, delete it from solution, and commit the new solution. If it was moved, delete the old file, and add the new file with the instructions above.
+
 # Tech
 The tech behind Dungeontest
 
