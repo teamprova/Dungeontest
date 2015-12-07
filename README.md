@@ -8,7 +8,13 @@ Everything here should technically work on Mac, but it has not been tested. We a
 Load up the Visual Studio project, build and run, and you should be good to go. The application should export to the bin/ folder.
 
 ###### GNU/Linux
-Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open up the solution. Goto "Packages" and add 'MonoGame.Framework.Linux'. Then, compile, and you should be good. Application should export to bin/.
+Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open up the solution. Goto "Packages" and add 'MonoGame.Framework.Linux'. 
+
+Once you have done this, from the source directory in MonoDevelop, right click on 'Tato.Sdl.dll.config' and 'OpenTK.dll.config' and goto their Properties, and set 'Copy to output directory' as 'Always copy'.
+
+After that, expand 'References' and then expand 'From Packages', and right click on all of the listings there, and goto their Properties, and set 'Copy to output directory' as 'Always copy'.
+
+Then, compile, and you should be good. Application should export to bin/.
 
 This will export to an .exe, but because you have Mono, you goto the /bin directory in terminal and type "mono DungeonCrawler.exe", and it will run.
 
