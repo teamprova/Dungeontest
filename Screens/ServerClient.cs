@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 
 namespace DungeonTest
 {
@@ -11,7 +9,6 @@ namespace DungeonTest
     {
         UdpClient manager;
         IPEndPoint HostIP;
-        Thread listener;
 
         //time given to let the player read error text
         const int READ_TIME = 3;
@@ -34,10 +31,6 @@ namespace DungeonTest
             manager.Client.ReceiveTimeout = 1;
             manager.Client.Blocking = true;
             manager.Connect(HostIP);
-
-            listener = new Thread(new ThreadStart(Listen));
-            listener.IsBackground = true;
-            listener.Start();
         }
 
         public override Screen Update(float deltaTime)
@@ -53,6 +46,7 @@ namespace DungeonTest
                     return new Join();
             }
 
+            Listen();
             SendUpdates();
             
             return base.Update(deltaTime);
@@ -60,58 +54,55 @@ namespace DungeonTest
 
         private void Listen()
         {
-            while (lastUpdate < MAX_IDLE_TIME && !closed)
+            while (manager.Available > 0)
             {
-                if (manager.Available > 0)
+                try
                 {
-                    try
+                    byte[] response = manager.Receive(ref HostIP);
+
+                    //new update
+                    lastUpdate = 0;
+
+                    byte protocol = response[0];
+
+                    response = response.Skip(1).ToArray();
+
+                    switch (protocol)
                     {
-                        byte[] response = manager.Receive(ref HostIP);
-
-                        //new update
-                        lastUpdate = 0;
-
-                        byte protocol = response[0];
-
-                        response = response.Skip(1).ToArray();
-
-                        switch (protocol)
-                        {
-                            case (byte)Protocol.UPDATE_ID:
-                                Dungeon.task = "UPDATING CLIENT ID";
-                                id = BitConverter.ToInt32(response, 0);
-                                break;
-                            case (byte)Protocol.UPDATE_ENTITY_DATA:
-                                Dungeon.task = "FETCHING ENTITIES";
-                                UpdateEntities(response);
-                                break;
-                            case (byte)Protocol.MAP_CHANGE:
-                                Dungeon.task = "UPDATING DUNGEON";
-                                Dungeon.LoadFromData(response);
-                                Input.lockMouse = true;
-                                loading = false;
-                                break;
-                            case (byte)Protocol.UPDATE_PLAYER:
-                                Dungeon.task = "GETTING PLAYER DATA";
-                                player.CopyBytes(response);
-                                break;
-                            case (byte)Protocol.SEND_SPRITE:
-                                Dungeon.task = "DOWNLOADING ASSETS";
-                                TextureData data = new TextureData(response);
-                                sprites.Add(data);
-                                spriteNames.Add("?");
-                                break;
-                        }
+                        case (byte)Protocol.UPDATE_ID:
+                            Dungeon.task = "UPDATING CLIENT ID";
+                            id = BitConverter.ToInt32(response, 0);
+                            break;
+                        case (byte)Protocol.UPDATE_ENTITY_DATA:
+                            Dungeon.task = "FETCHING ENTITIES";
+                            UpdateEntities(response);
+                            break;
+                        case (byte)Protocol.MAP_CHANGE:
+                            Dungeon.task = "UPDATING DUNGEON";
+                            Dungeon.LoadFromData(response);
+                            Input.lockMouse = true;
+                            loading = false;
+                            break;
+                        case (byte)Protocol.UPDATE_PLAYER:
+                            Dungeon.task = "GETTING PLAYER DATA";
+                            player.CopyBytes(response);
+                            break;
+                        case (byte)Protocol.SEND_SPRITE:
+                            Dungeon.task = "DOWNLOADING ASSETS";
+                            TextureData data = new TextureData(response);
+                            sprites.Add(data);
+                            spriteNames.Add("?");
+                            break;
                     }
-                    catch (Exception) { }
                 }
+                catch (Exception) { }
             }
         }
 
         void UpdateEntities(byte[] response)
         {
-            List<Entity> PlayerResponseList = new List<Entity>();
-            List<Entity> EntityResponseList = new List<Entity>();
+            players.Clear();
+            Dungeon.entities.Clear();
 
             for (int i = 0; i < response.Length; i += Entity.BYTES)
             {
@@ -122,12 +113,12 @@ namespace DungeonTest
                 {
                     case 0:
                         if (i / Entity.BYTES == id)
-                            PlayerResponseList.Add(player);
+                            players.Add(player);
                         else
-                            PlayerResponseList.Add(e);
+                            players.Add(e);
                         break;
                     default:
-                        EntityResponseList.Add(e);
+                        Dungeon.entities.Add(e);
                         break;
                 }
 
@@ -137,8 +128,6 @@ namespace DungeonTest
                     e.CopyBytes(EntityBytes);
             }
 
-            Dungeon.entities = EntityResponseList;
-            players = PlayerResponseList;
             UpdateEntityArray();
         }
 

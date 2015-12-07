@@ -21,9 +21,6 @@ namespace DungeonTest
         const float GAME_SCALE = 2;
         const int LOADING_BAR_WIDTH = 560;
 
-        // Test Stuff
-        const int MAKE_ME_FEEL_TALLER = 0;
-
         const float MIN_BRIGHTNESS = .1f;
 
         public static TextureData roofTextureData;
@@ -227,7 +224,6 @@ namespace DungeonTest
                 double rayAngle = (i / (double)GAME_WIDTH) * fovInRadians - fovInRadians / 2f;
                 //add the player's angle for camera rotation
                 rayAngle += player.angle;
-                int bob = MAKE_ME_FEEL_TALLER + headBob;
 
                 Block block;
                 float textureX;
@@ -235,14 +231,72 @@ namespace DungeonTest
 
                 //cast rays
                 float dist = Dungeon.CastRay(player, rayAngle, out block, out textureX, out collision);
-                RoofCast(rayAngle, i, bob);
-                FloorCast(rayAngle, i, bob);
-
-                DrawRay(block, i, bob, rayAngle, dist, textureX, collision);
+                DrawRay(block, i, rayAngle, dist, textureX, collision);
+                FloorCast(rayAngle, i);
             }
         }
 
-        public void DrawRay(Block block, int x, int bob, double rayAngle, float dist, float textureX, Vector2 collision)
+        void FloorCast(double rayAngle, int x)
+		{
+			Matrix transform = Matrix.CreateRotationZ ((float)rayAngle);
+			double offsetAngle = Math.Cos (player.angle - rayAngle);
+
+			for (int y = -Math.Abs (headBob) - 1; y < GAME_HEIGHT / 2 + headBob; y++)
+			{
+				if (ctx.GetPixel (x, y + headBob) == Color.Transparent)
+				{
+					float slope = GAME_HEIGHT / 2 - y;
+					Color roofPixel = Color.Black;
+					Color floorPixel = Color.Black;
+					float slopeIntercept = float.MaxValue;
+
+					if (slope != 0)
+					{
+						Vector2 texturePos = Vector2.Zero;
+
+						slopeIntercept = (float)(viewDist / 2 / slope / offsetAngle);
+						texturePos.X = (float)(Math.Cos (rayAngle) * slopeIntercept);
+						texturePos.Y = (float)(Math.Sin (rayAngle) * slopeIntercept);
+						texturePos += player.pos;
+
+						Block block = Dungeon.GetBlockAt (texturePos.X, texturePos.Y);
+						float brightness = GetBrightness (texturePos.X, texturePos.Y);
+
+						if (block != null)
+							if (block.blockType < sprites.Count)
+							{
+								texturePos.X %= 1;
+								texturePos.Y %= 1;
+
+								TextureData sprite = sprites [block.blockType];
+
+								int spriteX = (int)(texturePos.X * sprite.width);
+								int spriteY = (int)(texturePos.Y * sprite.height);
+
+								floorPixel = sprite.GetPixel (spriteX, spriteY);
+								TextureData.Darken (ref floorPixel, brightness);
+
+								spriteX = (int)(texturePos.X * roofTextureData.width);
+								spriteY = (int)(texturePos.Y * roofTextureData.height);
+
+								roofPixel = roofTextureData.GetPixel (spriteX, spriteY);
+								TextureData.Darken (ref roofPixel, brightness);
+							}
+					}
+
+					ctx.SetPixel (x, y + headBob, roofPixel);
+					ctx.SetZIndex (x, y + headBob, slopeIntercept);
+
+					if (ctx.GetPixel (x, -y + headBob + GAME_HEIGHT - 2) == Color.Transparent)
+					{
+						ctx.SetPixel (x, -y + headBob + GAME_HEIGHT - 2, floorPixel);
+						ctx.SetZIndex (x, -y + headBob + GAME_HEIGHT - 2, slopeIntercept);
+					}
+				}
+			}
+		}
+
+        public void DrawRay(Block block, int x, double rayAngle, float dist, float textureX, Vector2 collision)
         {
             if (block == null)
                 return;
@@ -251,7 +305,7 @@ namespace DungeonTest
 
             double height = viewDist / (dist * Math.Cos(player.angle - rayAngle)) + 1;
 
-            int offsetHeight = (int)((GAME_HEIGHT - height) / 2 + bob);
+            int offsetHeight = (int)((GAME_HEIGHT - height) / 2 + headBob);
 
             float brightness = GetBrightness(collision.X, collision.Y);
 
@@ -274,96 +328,6 @@ namespace DungeonTest
 
                 ctx.SetPixel(x, y + offsetHeight, pixel);
                 ctx.SetZIndex(x, y + offsetHeight, dist);
-            }
-        }
-
-        void RoofCast(double rayAngle, int x, int bob)
-        {
-            Matrix transform = Matrix.CreateRotationZ((float)rayAngle);
-            double offsetAngle = Math.Cos(player.angle - rayAngle);
-
-            for (int y = 0; y < GAME_HEIGHT / 2 + MAKE_ME_FEEL_TALLER; y++)
-            {
-                if (ctx.GetPixel(x, y) == Color.Transparent)
-                {
-                    float slope = GAME_HEIGHT / 2 - y + bob;
-                    Color pixel = Color.Black;
-                    float slopeIntercept = float.MaxValue;
-
-                    if (slope != 0)
-                    {
-                        Vector2 texturePos = Vector2.Zero;
-
-                        slopeIntercept = (float)(viewDist / 2 / slope / offsetAngle);
-                        texturePos.X = (float)(Math.Cos(rayAngle) * slopeIntercept);
-                        texturePos.Y = (float)(Math.Sin(rayAngle) * slopeIntercept);
-                        texturePos += player.pos;
-
-                        if (texturePos.X < 0 || texturePos.Y < 0)
-                            continue;
-
-                        float brightness = GetBrightness(texturePos.X, texturePos.Y) / 2;
-
-                        texturePos.X %= 1;
-                        texturePos.Y %= 1;
-
-                        int spriteX = roofTextureData.width - (int)(texturePos.X * roofTextureData.width) - 1;
-                        int spriteY = (int)(texturePos.Y * roofTextureData.height);
-
-                        pixel = roofTextureData.GetPixel(spriteX, spriteY);
-                        TextureData.Darken(ref pixel, brightness);
-                    }
-
-                    ctx.SetPixel(x, y, pixel);
-                    ctx.SetZIndex(x, y, slopeIntercept);
-                }
-            }
-        }
-
-        void FloorCast(double rayAngle, int x, int bob)
-        {
-            Matrix transform = Matrix.CreateRotationZ((float)rayAngle);
-            double offsetAngle = Math.Cos(player.angle - rayAngle);
-
-            for (int y = GAME_HEIGHT / 2 + MAKE_ME_FEEL_TALLER; y < GAME_HEIGHT; y++)
-            {
-                if (ctx.GetPixel(x, y) == Color.Transparent)
-                {
-                    float slope = y - GAME_HEIGHT / 2 - MAKE_ME_FEEL_TALLER - headBob;
-                    Color pixel = Color.Black;
-                    float slopeIntercept = float.MaxValue;
-
-                    if (slope != 0)
-                    {
-                        Vector2 texturePos = Vector2.Zero;
-
-                        slopeIntercept = (float)(viewDist / 2 / slope / offsetAngle);
-                        texturePos.X = (float)(Math.Cos(rayAngle) * slopeIntercept);
-                        texturePos.Y = (float)(Math.Sin(rayAngle) * slopeIntercept);
-                        texturePos += player.pos;
-
-                        Block block = Dungeon.GetBlockAt(texturePos.X, texturePos.Y);
-                        float brightness = GetBrightness(texturePos.X, texturePos.Y);
-
-                        if (block != null)
-                            if (block.blockType < sprites.Count)
-                            {
-                                texturePos.X %= 1;
-                                texturePos.Y %= 1;
-
-                                TextureData sprite = sprites[block.blockType];
-
-                                int spriteX = (int)(texturePos.X * sprite.width);
-                                int spriteY = (int)(texturePos.Y * sprite.height);
-
-                                pixel = sprite.GetPixel(spriteX, spriteY);
-                                TextureData.Darken(ref pixel, brightness);
-                            }
-                    }
-
-                    ctx.SetPixel(x, y, pixel);
-                    ctx.SetZIndex(x, y, slopeIntercept);
-                }
             }
         }
 

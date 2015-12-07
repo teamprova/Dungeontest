@@ -186,13 +186,6 @@ namespace DungeonTest
                     }
                     catch (SocketException e)
                     {
-                        switch (e.ErrorCode)
-                        {
-                            // client disconnected
-                            case 10054:
-                                //NewConnections.
-                                break;
-                        }
                     }
 
                     // reset for new client

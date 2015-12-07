@@ -124,7 +124,7 @@ namespace DungeonTest
         bool IsLegitIP(string IP, out IPAddress ServerIP)
         {
             //is the ip legit bruh
-            if (IPAddress.TryParse(IP, out ServerIP) && IP != Program.getIPv4())
+            if (IPAddress.TryParse(IP, out ServerIP))
                 return true;
             return false;
         }
