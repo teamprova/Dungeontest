@@ -25,6 +25,19 @@ in MonoDevelop, do not create a file inside /DungeontestLinux/, create it in the
 ###### Deleted/moved file?
 If you have a deleted file, delete it from solution, and commit the new solution. If it was moved, delete the old file, and add the new file with the instructions above.
 
+# Commiting
+A basic guide for commiting files
+
+###### Windows
+With Windows, do not commit the following folders: packages, obj, bin
+
+Everything else is fine to commit.
+
+###### GNU/Linux
+With GNU/Linux (ie: everything in /DungeontestLinux/), do not commit the following folders: packages, obj.
+
+Make sure that your /bin/ folder only includes "Content/Fonts/" stuff for both Debug and Release. Do not include ANYTHING else besides that in the /bin/ folder. This is due to a problem with the pipeline not copying a .xnb for the font.
+
 # Tech
 The tech behind Dungeontest
 
