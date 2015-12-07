@@ -1,42 +1,27 @@
 # Dungeontest
 This is a test about retro-styled games. We have no clue what this game will be about, but currently we are developing the engine, and then having a Lua content side, so we can make game content, while allowing modders to use it.
 
+Everything here should technically work on Mac, but it has not been tested. We are willing to compile a Mac build if you can test it for us. Thanks!
+
 # Compiling and Running
 ###### Windows
 Load up the Visual Studio project, build and run, and you should be good to go. The application should export to the bin/ folder.
 
 ###### GNU/Linux
-Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open the solution in "/DungeontestLinux", and you can build and run, completely fine. Application should export to bin/.
+Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open up the solution. Goto "Packages" and add 'MonoGame.Framework.Linux'. Then, compile, and you should be good. Application should export to bin/.
 
-This will export to an .exe, but because you have Mono, you goto the /bin directory in terminal and type "mono DungeontestLinux.exe", and it will run.
+This will export to an .exe, but because you have Mono, you goto the /bin directory in terminal and type "mono DungeonCrawler.exe", and it will run.
 
 ###### Disclaimer
 Further instruction on compiling will be given in a later version of this README. And with detailed answers to why it sometimes does not work with Linux, and how to solve it.
 
-# Editing files / Fixing file errors
-This is a tutorial on creating new files, and fixing file errors in Ubuntu
-
-###### Windows
-With Visual Studio, create a new file in the source folder, not /DungeontestLinux/. It should work automatically now. If the file was created with GNU/Linux, you have to create add the files by right clicking on the location, and clicking "Add File"
-
-###### GNU/Linux
-in MonoDevelop, do not create a file inside /DungeontestLinux/, create it in the root source folder. Then when adding it to MonoDevelop, right click on the destination, and click "Add files", add the file, but choose to add a link, not copy or move.
-
-###### Deleted/moved file?
-If you have a deleted file, delete it from solution, and commit the new solution. If it was moved, delete the old file, and add the new file with the instructions above.
-
 # Commiting
 A basic guide for commiting files
 
-###### Windows
+###### Windows and GNU/Linux
 With Windows, do not commit the following folders: packages, obj, bin
 
 Everything else is fine to commit.
-
-###### GNU/Linux
-With GNU/Linux (ie: everything in /DungeontestLinux/), do not commit the following folders: packages, obj.
-
-Make sure that your /bin/ folder only includes "Content/Fonts/" stuff for both Debug and Release. Do not include ANYTHING else besides that in the /bin/ folder. This is due to a problem with the pipeline not copying a .xnb for the font.
 
 # Tech
 The tech behind Dungeontest
