@@ -12,7 +12,7 @@ Install Mono, MonoDevelop, and the MonoGame add-in for MonoDevelop, and open up 
 
 Once you have done this, from the source directory in MonoDevelop, right click on 'Tato.Sdl.dll.config' and 'OpenTK.dll.config' and goto their Properties, and set 'Copy to output directory' as 'Always copy'.
 
-After that, expand 'References' and then expand 'From Packages', and right click on all of the listings there, and goto their Properties, and set 'Copy to output directory' as 'Always copy'.
+After that, expand 'References' and then expand 'From Packages', and right click on all of the listings there, and goto their Properties, and check "Local Copy" for each.
 
 Then, compile, and you should be good. Application should export to bin/.
 
