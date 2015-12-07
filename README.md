@@ -13,6 +13,15 @@ This will export to an .exe, but because you have Mono, you goto the /bin direct
 ###### Disclaimer
 Further instruction on compiling will be given in a later version of this README. And with detailed answers to why it sometimes does not work with Linux, and how to solve it.
 
+# Editing files / Fixing file errors
+This is a tutorial on creating new files, and fixing file errors in Ubuntu
+
+###### Windows
+With Visual Studio, create a new file in the source folder, not /DungeontestLinux/. It should work automatically now. If the file was created with GNU/Linux, you have to create add the files by right clicking on the location, and clicking "Add File"
+
+###### GNU/Linux
+in MonoDevelop, do not create a file inside /DungeontestLinux/, create it in the root source folder. Then when adding it to MonoDevelop, right click on the destination, and click "Add files", add the file, but choose to add a link, not copy or move.
+
 # Tech
 The tech behind Dungeontest
 
