@@ -113,7 +113,7 @@ namespace DungeonTest
         }
 
         // Multiplayer stuff
-        public const int BYTES = 20;
+        public const int BYTES = 12;
 
         public byte[] GetSendableFormat()
         {

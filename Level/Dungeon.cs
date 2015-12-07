@@ -41,6 +41,7 @@ namespace DungeonTest
         {
             ModHandler.HandleEvent("PreGenerate");
             ModHandler.HandleEvent("PostGenerate");
+            UpdateData();
 
             complete = true;
 
@@ -51,7 +52,6 @@ namespace DungeonTest
         {
             map = new Block[width, height];
             entities.Clear();
-            CoreGame.ClearSprites();
         }
 
         public static float GetProgress()

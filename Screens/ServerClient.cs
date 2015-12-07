@@ -20,6 +20,8 @@ namespace DungeonTest
 
         public Client(IPAddress IP)
         {
+            server = false;
+
             players.Clear();
             ClearSprites();
 
@@ -113,7 +115,7 @@ namespace DungeonTest
 
             for (int i = 0; i < response.Length; i += Entity.BYTES)
             {
-                Entity e = new Entity(id, 0, 0);
+                Entity e = new Entity(0, 0, 0);
                 int type = BitConverter.ToInt32(response, i);
 
                 switch (type)

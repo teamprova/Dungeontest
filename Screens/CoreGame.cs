@@ -49,6 +49,7 @@ namespace DungeonTest
         protected bool loading = true;
         protected int id = 0;
         protected bool closed = false;
+        protected static bool server = false;
 
         bool debugging = false;
         float averagefps = 0;
@@ -60,8 +61,12 @@ namespace DungeonTest
         {
             sprites.Clear();
             spriteNames.Clear();
-            API.ClaimID("Player", "Content/Sprites/Entities/player.png");
-            ModHandler.HandleEvent("LoadSprites");
+
+            if (server)
+            {
+                API.ClaimID("Player", "Content/Sprites/Entities/player.png");
+                ModHandler.HandleEvent("LoadSprites");
+            }
         }
 
         public override Screen Update(float deltaTime)
@@ -241,6 +246,8 @@ namespace DungeonTest
         {
             if (block == null)
                 return;
+            if (sprites.Count <= block.blockType)
+                return;
 
             double height = viewDist / (dist * Math.Cos(player.angle - rayAngle)) + 1;
 
@@ -339,18 +346,19 @@ namespace DungeonTest
                         float brightness = GetBrightness(texturePos.X, texturePos.Y);
 
                         if (block != null)
-                        {
-                            texturePos.X %= 1;
-                            texturePos.Y %= 1;
+                            if (block.blockType < sprites.Count)
+                            {
+                                texturePos.X %= 1;
+                                texturePos.Y %= 1;
 
-                            TextureData sprite = sprites[block.blockType];
+                                TextureData sprite = sprites[block.blockType];
 
-                            int spriteX = (int)(texturePos.X * sprite.width);
-                            int spriteY = (int)(texturePos.Y * sprite.height);
+                                int spriteX = (int)(texturePos.X * sprite.width);
+                                int spriteY = (int)(texturePos.Y * sprite.height);
 
-                            pixel = sprite.GetPixel(spriteX, spriteY);
-                            TextureData.Darken(ref pixel, brightness);
-                        }
+                                pixel = sprite.GetPixel(spriteX, spriteY);
+                                TextureData.Darken(ref pixel, brightness);
+                            }
                     }
 
                     ctx.SetPixel(x, y, pixel);

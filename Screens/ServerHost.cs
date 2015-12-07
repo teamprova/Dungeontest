@@ -26,6 +26,8 @@ namespace DungeonTest
 
         public ServerHost()
         {
+            server = true;
+
             players.Clear();
             ClearSprites();
 

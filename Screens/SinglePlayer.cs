@@ -5,6 +5,8 @@ namespace DungeonTest
     {
         public SinglePlayer()
         {
+            server = true;
+
             players.Clear();
             ClearSprites();
 
