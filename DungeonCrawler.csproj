@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="Basic classes\Block.cs" />
+    <Compile Include="Basic classes\Sounds.cs" />
     <Compile Include="DungeonTest.cs" />
     <Compile Include="Level\Dungeon.cs" />
     <Compile Include="Basic classes\Entity.cs" />
@@ -94,6 +95,9 @@
   <ItemGroup>
     <Content Include="Content\Fonts\default.png" />
     <Content Include="Content\SaveData\ServerList.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sounds\step.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Blocks\brick.png">

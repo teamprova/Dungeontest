@@ -4,13 +4,11 @@ using MoonSharp.Interpreter;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
 
 namespace DungeonTest
 {
     public class API
     {
-
         /// <summary>
         /// Claims a location in the game's sprite list
         /// </summary>
@@ -40,7 +38,44 @@ namespace DungeonTest
 
             return id;
         }
-			
+
+        public static void LoadSound(string name, string src)
+        {
+            Console.WriteLine("\n[dungeontest] creating sound '{0}'\n", name);
+
+            try
+            {
+                Sounds soundEffect = new Sounds(src);
+
+                // add name to sound list
+                CoreGame.soundNames.Add(name);
+                CoreGame.soundEffects.Add(soundEffect);
+
+                Console.WriteLine("\n[dungeontest] created sound '{0}'\n", name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("\n[dungeontest] error occured when creating sound '{0}' from file '{1}'. error: {2}\n", name, src, ex.Message);
+            }
+        }
+
+        public static void PlaySound(string name, float volume, float pan)
+        {
+            int soundIndex = CoreGame.soundNames.IndexOf(name);
+            
+            Console.WriteLine(soundIndex);
+
+            if (soundIndex >= 0)
+            {
+                Console.WriteLine("\n[dungeontest] playing sound '{0}'\n", name);
+
+                Sounds soundEffect = CoreGame.soundEffects[soundIndex];
+                soundEffect.Play(volume, pan);
+            }
+            else
+                Console.WriteLine("\n[dungeontest] sound \'{0}\' does not exist", name);
+        }
+
 
         /// <summary>
         /// Spawns an an entity at (x, y)
@@ -137,7 +172,8 @@ namespace DungeonTest
 
         public static void SetDungeonSize(int width, int height)
         {
-        
+
+
         }
     }
 
@@ -168,7 +204,6 @@ namespace DungeonTest
             DynValue api = UserData.Create(new API());
             DynValue input = UserData.Create(new Input());
             DynValue keys = UserData.Create(new Keys());
-			DynValue sound = UserData.Create(new Sounds());
 
             // Script Loader Base
             //((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
@@ -184,7 +219,6 @@ namespace DungeonTest
                     script.Globals.Set("API", api);
                     script.Globals.Set("Input", input);
                     script.Globals.Set("Keys", keys);
-					script.Globals.Set("Sound", sound);
 
                     // Load the file
                     script.DoFile(file);

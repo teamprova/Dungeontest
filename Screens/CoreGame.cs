@@ -43,7 +43,7 @@ namespace DungeonTest
         public static List<TextureData> sprites = new List<TextureData>();
         public static List<string> spriteNames = new List<string>();
 
-		public static List<SoundEffect> soundEffect = new List<SoundEffect> ();
+		public static List<Sounds> soundEffects = new List<Sounds> ();
 		public static List<string> soundNames = new List<string> ();
 
         protected bool initializing = true;
@@ -58,15 +58,19 @@ namespace DungeonTest
         public int headBob = 0;
         double bobAngle = 0;
 
-        public static void ClearSprites()
+        public static void ClearContent()
         {
             sprites.Clear();
             spriteNames.Clear();
 
+            soundEffects.Clear();
+            soundNames.Clear();
+
             if (server)
             {
                 API.ClaimID("Player", "Content/Sprites/Entities/player.png");
-                ModHandler.HandleEvent("LoadSprites");
+                API.LoadSound("Step", "Content/Sounds/step.wav");
+                ModHandler.HandleEvent("LoadContent");
             }
         }
 
@@ -110,7 +114,12 @@ namespace DungeonTest
                 player.pos += vel;
 
                 bobAngle += 5 * vel.Length();
-                bobAngle %= Math.PI * 2;
+
+                if (bobAngle > Math.PI * 2)
+                {
+                    bobAngle = 0;
+                    API.PlaySound("Step", 1, 0);
+                }
 
                 headBob = (int)(Math.Sin(bobAngle) * 4);
             }
