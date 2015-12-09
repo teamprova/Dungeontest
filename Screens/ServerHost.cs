@@ -29,7 +29,7 @@ namespace DungeonTest
             server = true;
 
             players.Clear();
-            ClearSprites();
+            ClearContent();
 
             Dungeon.Generate();
 
@@ -184,7 +184,7 @@ namespace DungeonTest
                             }
                         }
                     }
-                    catch (SocketException e)
+                    catch (SocketException)
                     {
                     }
 

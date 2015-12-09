@@ -20,7 +20,7 @@ namespace DungeonTest
             server = false;
 
             players.Clear();
-            ClearSprites();
+            ClearContent();
 
             Dungeon.task = "CONNECTING";
             Dungeon.Clear();

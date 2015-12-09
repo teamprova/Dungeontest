@@ -8,7 +8,7 @@ namespace DungeonTest
             server = true;
 
             players.Clear();
-            ClearSprites();
+            ClearContent();
 
             Dungeon.Generate();
 

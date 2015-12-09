@@ -12,7 +12,7 @@ roomsToMake = 0;
 CEMENT = 0;
 CEMENT_BRICKS = 0;
 
-function LoadSprites()
+function LoadContent()
 	-- Claim IDs
 	CEMENT = API:ClaimID("Cement", "Content/Sprites/Blocks/cement.png");
 	CEMENT_BRICKS = API:ClaimID("CementBricks", "Content/Sprites/Blocks/brick.png");
