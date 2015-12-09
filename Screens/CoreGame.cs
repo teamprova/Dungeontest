@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace DungeonTest
 {
@@ -41,6 +42,9 @@ namespace DungeonTest
 
         public static List<TextureData> sprites = new List<TextureData>();
         public static List<string> spriteNames = new List<string>();
+
+		public static List<SoundEffect> soundEffect = new List<SoundEffect> ();
+		public static List<string> soundNames = new List<string> ();
 
         protected bool initializing = true;
         protected bool loading = true;

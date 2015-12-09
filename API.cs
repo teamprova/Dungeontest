@@ -4,11 +4,13 @@ using MoonSharp.Interpreter;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace DungeonTest
 {
     public class API
     {
+
         /// <summary>
         /// Claims a location in the game's sprite list
         /// </summary>
@@ -38,6 +40,7 @@ namespace DungeonTest
 
             return id;
         }
+			
 
         /// <summary>
         /// Spawns an an entity at (x, y)
@@ -165,6 +168,7 @@ namespace DungeonTest
             DynValue api = UserData.Create(new API());
             DynValue input = UserData.Create(new Input());
             DynValue keys = UserData.Create(new Keys());
+			DynValue sound = UserData.Create(new Sounds());
 
             // Script Loader Base
             //((ScriptLoaderBase)script.Options.ScriptLoader).ModulePaths = new string[] { "mods/?", "mods/?.lua" };
@@ -180,6 +184,7 @@ namespace DungeonTest
                     script.Globals.Set("API", api);
                     script.Globals.Set("Input", input);
                     script.Globals.Set("Keys", keys);
+					script.Globals.Set("Sound", sound);
 
                     // Load the file
                     script.DoFile(file);
