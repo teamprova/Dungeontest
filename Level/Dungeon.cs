@@ -3,7 +3,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace DungeonTest
+namespace Dungeontest
 {
     class Dungeon
     {
