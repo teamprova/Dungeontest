@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace DungeonTest
+namespace Dungeontest
 {
     class Container : Tool
     {
