@@ -1,0 +1,17 @@
+﻿<Properties StartupItem="DungeonCrawler.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="mods/enemy.lua">
+    <Files>
+      <File FileName="mods/BasicMovement.lua" Line="29" Column="4" />
+      <File FileName="mods/test.lua" Line="29" Column="6" />
+      <File FileName="Basic classes/Block.cs" Line="1" Column="1" />
+      <File FileName="Basic classes/Entity.cs" Line="17" Column="21" />
+      <File FileName="Screens/CoreGame.cs" Line="27" Column="24" />
+      <File FileName="mods/enemy.lua" Line="1" Column="15" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

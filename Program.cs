@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
-namespace DungeonTest
+namespace Dungeontest
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -22,7 +22,7 @@ namespace DungeonTest
             using (StreamWriter writer = new StreamWriter("debug.txt"))
             {
                 //Console.SetOut(writer);
-                using (DungeonTest game = new DungeonTest())
+                using (Dungeontest game = new Dungeontest())
                     game.Run();
             }
         }
