@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace DungeonTest
+namespace Dungeontest
 {
     public class Entity
     {
