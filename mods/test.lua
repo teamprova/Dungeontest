@@ -1,6 +1,6 @@
 ﻿-- Spawns test entities around the map
 
-testEntityID = 0;
+--[[testEntityID = 0;
 
 function PostGenerate()
 	testEntityID = API:ClaimID("test", "Content/Sprites/Entities/player.png"); -- Create an entity
@@ -26,4 +26,4 @@ function SpawnEntity()
 
 	API:SpawnEntity(testEntityID, x, y); -- Spawn the entity
 	--print("\n[dungeontest] spawning entity 'blackGuy'\n");
-end
+end]]
