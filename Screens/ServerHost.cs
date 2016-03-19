@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using Microsoft.Xna.Framework.Input;
 
-namespace DungeonTest
+namespace Dungeontest
 {
     public enum Protocol : byte { UPDATE_ID, UPDATE_PLAYER, MAP_CHANGE, UPDATE_ENTITY_DATA, SEND_SPRITE }
 

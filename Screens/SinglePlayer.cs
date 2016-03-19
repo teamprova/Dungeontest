@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
-namespace DungeonTest
+namespace Dungeontest
 {
     class SinglePlayer : CoreGame
     {

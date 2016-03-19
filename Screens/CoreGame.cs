@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 
-namespace DungeonTest
+namespace Dungeontest
 {
     abstract class CoreGame : Screen
     {
@@ -22,7 +22,7 @@ namespace DungeonTest
         const float GAME_SCALE = 2;
         const int LOADING_BAR_WIDTH = 560;
 
-        const float MIN_BRIGHTNESS = .1f;
+        const float MIN_BRIGHTNESS = .35f;
 
         public static TextureData roofTextureData;
 
