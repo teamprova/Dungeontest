@@ -1,7 +1,7 @@
 # Dungeontest
 This is a test about retro-styled games. We have no clue what this game will be about, but currently we are developing the engine, and then having a Lua content side, so we can make game content, while allowing modders to use it.
 
-It will be a game engine and a game at the same time. This way, players can use the same engine to make a different game. Although, this is a WIP, and is not even close to completion, it still works, and we are willing to explain how stuff works via email at preston@cammarata.info, until we add docs of course.
+It will be a game engine and a game at the same time. This way, players can use the same engine to make a different game. Although, this is a WIP, and is not even close to completion, it still works, and we are willing to explain how stuff works via email at paceriouu@gmail.com, until we add docs of course.
 
 Everything here should technically work on Mac, but it has not been tested. We are willing to compile a Mac build if you can test it for us. Thanks!
 
